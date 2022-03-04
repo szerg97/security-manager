@@ -1,0 +1,10 @@
+com\secman\repository\SecurityRepository.class
+com\secman\repository\FeedbackRepository.class
+com\secman\repository\AddressRepository.class
+com\secman\repository\EmployeeRepository.class
+com\secman\repository\MessageRepository.class
+com\secman\repository\CountryRepository.class
+com\secman\repository\CityRepository.class
+com\secman\repository\CustomerRepository.class
+com\secman\repository\DistributorRepository.class
+com\secman\repository\SecurityCategoryRepository.class
