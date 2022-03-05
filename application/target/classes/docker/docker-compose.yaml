@@ -46,11 +46,11 @@ services:
       - DB_ADDR=db-iam
       - DB_DATABASE=iam
       - DB_PORT=3306
-      - KEYCLOAK_LOGLEVEL=DEBUG
+      - KEYCLOAK_LOGLEVEL=ALL
       - ROOT_LOGLEVEL=DEBUG
       - KEYCLOAK_IMPORT=/tmp/example-realm.json
     volumes:
       - ${PWD}/realm-export.json:/tmp/example-realm.json
-#      - ${PWD}/../../../../../provider/target/provider-0.0.1-SNAPSHOT.jar:/opt/jboss/standalone/deployments/
+      - ${PWD}/../../../../../provider/target/provider-0.0.1-SNAPSHOT.jar:/opt/jboss/keycloak/standalone/deployments/provider-0.0.1-SNAPSHOT.jar
     depends_on:
       - db-iam

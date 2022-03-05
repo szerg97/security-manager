@@ -46,7 +46,7 @@ services:
       - DB_ADDR=db-iam
       - DB_DATABASE=iam
       - DB_PORT=3306
-      - KEYCLOAK_LOGLEVEL=DEBUG
+      - KEYCLOAK_LOGLEVEL=ALL
       - ROOT_LOGLEVEL=DEBUG
       - KEYCLOAK_IMPORT=/tmp/example-realm.json
     volumes:
