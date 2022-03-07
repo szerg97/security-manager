@@ -12,12 +12,21 @@ import { Router } from '@angular/router';
 export class AuthService {
   baseUrl = environment.apiUrl;
   private userIsAuth = false;
+  private userRoles: string[];
 
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(
     private http: HttpClient) { }
+
+  setUserRoles(userRoles){
+    this.userRoles = userRoles;
+  }
+
+  get getUserRoles(){
+    return this.userRoles;
+  }
 
   get getUserIsAuth(){
     return this.userIsAuth;

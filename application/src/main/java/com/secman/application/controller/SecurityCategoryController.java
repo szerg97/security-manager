@@ -48,9 +48,9 @@ public class SecurityCategoryController {
     @Operation(
             summary = "Query all categories",
             security = {
-                    @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
-                    @SecurityRequirement(name = "openid", scopes = {"gsec"}),
-                    @SecurityRequirement(name = "oauth2", scopes = {"gsec"})
+                    @SecurityRequirement(name = "apikey", scopes = {"gsec", "customer"}),
+                    @SecurityRequirement(name = "openid", scopes = {"gsec", "customer"}),
+                    @SecurityRequirement(name = "oauth2", scopes = {"gsec", "customer"})
             }
     )
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -77,9 +77,9 @@ public class SecurityCategoryController {
     @Operation(
             summary = "Query category",
             security = {
-                    @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
-                    @SecurityRequirement(name = "openid", scopes = {"gsec"}),
-                    @SecurityRequirement(name = "oauth2", scopes = {"gsec"})
+                    @SecurityRequirement(name = "apikey", scopes = {"gsec", "customer"}),
+                    @SecurityRequirement(name = "openid", scopes = {"gsec", "customer"}),
+                    @SecurityRequirement(name = "oauth2", scopes = {"gsec", "customer"})
             }
     )
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

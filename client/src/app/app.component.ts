@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { User } from './_models/user';
 import { AuthService } from './_services/auth.service';
@@ -15,8 +15,10 @@ export class AppComponent {
 
   constructor(
     private keycloakService: KeycloakService,
+    private authService: AuthService
     ){
     this.getUserDetails();
+    this.setRoles();
   }
 
   onLogout(){
@@ -29,5 +31,10 @@ export class AppComponent {
         console.log(data);
         this.user = data as User;
       });
+  }
+
+  setRoles(){
+    const roles = this.keycloakService.getKeycloakInstance().tokenParsed.resource_access.account.roles;
+    this.authService.setUserRoles(roles);
   }
 }
