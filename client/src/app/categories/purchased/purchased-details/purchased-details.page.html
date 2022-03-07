@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/categories/purchased"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Purchased details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="security">
+  <ion-card>
+    <ion-card-header>
+      <h1>{{ security.id }}</h1>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-button expand="block" (click)="presentModal()">Show general</ion-button>
+        <ion-button expand="block" (click)="presentModal()">Show interests</ion-button>
+        <ion-button expand="block" (click)="presentModal()">Show yields</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

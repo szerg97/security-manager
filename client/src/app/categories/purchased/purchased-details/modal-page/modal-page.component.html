@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/categories/purchased/1"></ion-back-button>
+        </ion-buttons>
+        <ion-title>General</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-grid>
+        <ion-item>{{ security.faceValue }}</ion-item>
+        <ion-item>{{ security.grossValue }}</ion-item>
+        <ion-item>{{ security.netValue }}</ion-item>
+        <ion-buttons>
+            <ion-button expand="block" (click)="dismiss()">Close</ion-button>
+        </ion-buttons>
+    </ion-grid>
+</ion-content>
