@@ -21,7 +21,7 @@
         <ion-list
           *ngIf="(loadedSecurities)"
         >
-          <ion-item *ngFor="let security of loadedSecurities" detail>
+          <ion-item *ngFor="let security of loadedSecurities" [routerLink]="['/', 'categories', 'purchased', security.id]" detail>
             <ion-label>
               <p>{{ security.id }}<p>
               <p>{{ security.faceValue }}</p>
