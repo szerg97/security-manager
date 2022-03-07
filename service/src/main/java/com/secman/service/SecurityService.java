@@ -21,8 +21,8 @@ public class SecurityService {
         return this.securityRepository.findAll();
     }
 
-    public List<Security> getByCustomer(Customer customer){
-        return this.securityRepository.findByCustomer(customer);
+    public List<Security> getByCustomer(String email){
+        return this.securityRepository.findByCustomerEmail(email);
     }
 
     public List<Security> getByDistributor(Distributor distributor){

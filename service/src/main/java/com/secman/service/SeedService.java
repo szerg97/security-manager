@@ -92,9 +92,9 @@ public class SeedService {
             return;
 
         Customer c1 = new Customer(
-                "Peter",
-                "Horvath",
-                "petihorvath@gmail.com",
+                "Customer",
+                "Customer",
+                "customer@customer.customer",
                 "06305632323",
                 "123456ED",
                 LocalDate.of(1989, 2, 13),

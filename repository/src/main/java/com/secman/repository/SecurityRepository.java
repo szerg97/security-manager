@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface SecurityRepository extends JpaRepository<Security, Long> {
-    List<Security> findByCustomer(Customer customer);
+    List<Security> findByCustomerEmail(String email);
     List<Security> findByCategory(SecurityCategory category);
     List<Security> findByDistributor(Distributor distributor);
 }

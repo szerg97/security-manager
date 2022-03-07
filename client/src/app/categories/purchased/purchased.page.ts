@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController, MenuController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { Security } from 'src/app/_models/security';
+import { AuthService } from 'src/app/_services/auth.service';
+import { SecurityService } from 'src/app/_services/security.service';
 
 @Component({
   selector: 'app-purchased',
@@ -7,9 +12,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PurchasedPage implements OnInit {
 
-  constructor() { }
+  loadedSecurities: Security[];
+  isLoading = false;
+  private securitiesSub: Subscription;
 
-  ngOnInit() {
-  }
+  constructor(
+    private securityService: SecurityService,
+    private menuCtrl: MenuController,
+    private loadingCtrl: LoadingController
+    ) { }
+
+    ngOnInit() {
+      this.securitiesSub = this.securityService.securities.subscribe(sec => {
+        this.loadedSecurities = sec;
+        this.menuCtrl.enable(true);
+      })
+    }
+  
+    ionViewWillEnter() {
+      this.isLoading = true;
+      this.securityService.fetchSecuritiesByCustomer().subscribe(() => {
+        this.isLoading = false;
+      });
+    }
+  
+    onOpenMenu() {
+      this.menuCtrl.toggle();
+    }
+  
+    ngOnDestroy() {
+      if (this.securitiesSub) {
+        this.securitiesSub.unsubscribe();
+      }
+    }
 
 }
