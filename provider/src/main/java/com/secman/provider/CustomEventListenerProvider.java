@@ -1,6 +1,5 @@
 package com.secman.provider;
 
-import com.secman.model.Customer;
 import org.jboss.logging.Logger;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
@@ -34,8 +33,6 @@ public class CustomEventListenerProvider implements EventListenerProvider {
 
             RealmModel realm = this.model.getRealm(event.getRealmId());
             UserModel newRegisteredUser = this.session.users().getUserById(event.getUserId(), realm);
-
-            Customer c = new Customer();
 
             log.info("-----------------------------------------------------------");
         }

@@ -126,7 +126,7 @@ public class SeedService {
 
         Distributor c1 = new Distributor(
                 "Erste Bank",
-                "info@erstebank.hu",
+                "distributor@distributor.distributor",
                 "0612456969",
                 true,
                 addressRepository.findById(1L).get()
@@ -152,21 +152,21 @@ public class SeedService {
             return;
 
         Employee c1 = new Employee(
-                "Aladar",
-                "Alma",
-                "aladar.alma@mycompany.com",
+                "Admin",
+                "Admin",
+                "admin@admin.admin",
                 "06305562323"
         );
         Employee c2 = new Employee(
                 "Bela",
                 "Banan",
-                "bela.banan@mycompany.com",
+                "bela@bela.bela",
                 "06701234567"
         );
         Employee c3 = new Employee(
                 "Cecilia",
                 "Citrom",
-                "cecilia.citrom@mycompany.com",
+                "cecilia@cecilia.cecilia",
                 "06701423659"
         );
         employeeRepository.saveAll(Arrays.asList(c1, c2, c3));
