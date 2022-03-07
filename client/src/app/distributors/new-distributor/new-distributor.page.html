@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/distributors"></ion-back-button>
+    </ion-buttons>
+    <ion-title>New distributor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form id="f1" #f1="ngForm" (ngSubmit)="onSubmit(f1)">
+    <ion-grid>
+      <ion-row>
+       <ion-col sizeSm="6" offsetSm="3">
+         <ion-item>
+           <ion-label position="floating">Name</ion-label>
+           <ion-input 
+           type="text" 
+           name="name"
+           ngModel
+           required
+           #nameCtrl="ngModel"></ion-input>
+         </ion-item>
+       </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input 
+            type="email" 
+            name="email"
+            ngModel
+            #emailCtrl="ngModel"></ion-input>
+          </ion-item>
+        </ion-col>
+       </ion-row>
+       <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Phone</ion-label>
+            <ion-input 
+            type="text" 
+            name="phone"
+            ngModel
+            #phoneCtrl="ngModel"></ion-input>
+          </ion-item>
+        </ion-col>
+       </ion-row>
+       <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label>Open</ion-label>
+            <ion-checkbox
+            name="status"
+            ngModel
+            #statusCtrl="ngModel">
+          </ion-checkbox>
+          </ion-item>
+        </ion-col>
+       </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-button
+          type="submit"
+          color="primary"
+          expand="block"
+          [disabled]="!f1.valid">
+          Create
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+</ion-content>

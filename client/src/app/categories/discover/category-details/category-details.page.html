@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/categories/discover"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Security details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="category" [routerLink]="['/', 'categories', 'edit-category', category.id]">
+        <ion-icon name="build-sharp" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="category">
+  <ion-card>
+    <ion-card-header>
+      <h1>{{ category.name }}</h1>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ category.id}}</p>
+      <p>{{ category.description}}</p>
+    </ion-card-content>
+  </ion-card>
+  <ion-button color="primary" margin (click)="onPurchase()">
+    Purchase
+  </ion-button>
+</ion-content>

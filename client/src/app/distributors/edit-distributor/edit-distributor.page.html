@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons *ngIf="(distributor)" slot="start">
+      <ion-back-button defaultHref="/distributors/{{distributor.id}}"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit distributor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<form id="editForm" #editForm="ngForm" (ngSubmit)="onSubmit(editForm)" *ngIf="(distributor)">
+  <ion-grid>
+    <ion-row>
+     <ion-col sizeSm="6" offsetSm="3">
+       <ion-item>
+         <ion-label position="floating">Name</ion-label>
+         <ion-input 
+         type="text" 
+         name="name"
+         ngModel
+         required
+         #nameCtrl="ngModel"
+         placeholder="{{distributor.name}}"
+         >
+        </ion-input>
+       </ion-item>
+     </ion-col>
+    </ion-row>
+    <ion-row>
+     <ion-col sizeSm="6" offsetSm="3">
+       <ion-item>
+         <ion-label position="floating">Email</ion-label>
+         <ion-input
+         type="email"
+         name="email"
+         ngModel
+         #descriptionCtrl="ngModel"
+         placeholder="{{distributor.email}}"
+         ></ion-input>
+       </ion-item>
+     </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-item>
+          <ion-label position="floating">Phone</ion-label>
+          <ion-input
+          type="text"
+          name="phone"
+          ngModel
+          #statusCtrl="ngModel"
+          placeholder="{{distributor.phone}}"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+     </ion-row>
+     <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-item>
+          <ion-label>Open</ion-label>
+          <ion-checkbox
+          name="status"
+          ngModel
+          #statusCtrl="ngModel"
+          ></ion-checkbox>
+        </ion-item>
+      </ion-col>
+     </ion-row>
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-button
+        type="submit"
+        color="primary"
+        expand="block"
+        [disabled]="!editForm.valid">
+        Confirm
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
+</ion-content>

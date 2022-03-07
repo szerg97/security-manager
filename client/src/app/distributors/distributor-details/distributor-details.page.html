@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/distributors"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Distributor details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="distributor" [routerLink]="['/', 'distributors', 'edit-distributor', distributor.id]">
+        <ion-icon name="build-sharp" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="distributor">
+  <ion-card>
+    <ion-card-header>
+      <h1>{{ distributor.name }}</h1>
+    </ion-card-header>
+    <ion-card-content>
+      <p>ID: {{ distributor.id}}</p>
+      <p>E-mail: {{ distributor.email}}</p>
+      <p>Phone: {{ distributor.phone}}</p>
+      <p>Status: {{ distributor.status == true ? 'Open' : 'Closed'}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons *ngIf="(category)" slot="start">
+      <ion-back-button defaultHref="/categories/discover/{{category.id}}"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit category</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<form id="editForm" #editForm="ngForm" (ngSubmit)="onSubmit(editForm)" *ngIf="(category)">
+  <ion-grid>
+    <ion-row>
+     <ion-col sizeSm="6" offsetSm="3">
+       <ion-item>
+         <ion-label position="floating">Name</ion-label>
+         <ion-input 
+         type="text" 
+         name="name"
+         ngModel
+         required
+         #nameCtrl="ngModel"
+         placeholder="{{category.name}}"
+         >
+        </ion-input>
+       </ion-item>
+     </ion-col>
+    </ion-row>
+    <ion-row>
+     <ion-col sizeSm="6" offsetSm="3">
+       <ion-item>
+         <ion-label position="floating">Description</ion-label>
+         <ion-textarea 
+         rows="3"
+         name="description"
+         ngModel
+         #descriptionCtrl="ngModel"
+         placeholder="{{category.description}}"
+         ></ion-textarea>
+       </ion-item>
+     </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-button
+        type="submit"
+        color="primary"
+        expand="block"
+        [disabled]="!editForm.valid">
+        Confirm
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
+</ion-content>
