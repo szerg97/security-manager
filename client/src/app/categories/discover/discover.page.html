@@ -23,14 +23,12 @@
    <ion-grid *ngIf="!isLoading && loadedCategories.length > 0">
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
-        <ion-list
-          *ngIf="(loadedCategories)"
-        >
-          <ion-item-sliding *ngFor="let category of loadedCategories"
+        <ion-list *ngIf="(loadedCategories)">
+          <div *ngIf="isAdmin">
+            <ion-item-sliding *ngFor="let category of loadedCategories"
           #slidingCategories>
             <ion-item
-            [routerLink]="['/', 'categories', 'discover', category.id]" detail
-            >
+            [routerLink]="['/', 'categories', 'discover', category.id]" detail>
               <ion-label>
                 <p>{{ category.id }}<p>
                 <p>{{ category.name }}</p>
@@ -46,6 +44,17 @@
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
+          </div>
+          <div *ngIf="!isAdmin">
+            <ion-item
+            [routerLink]="['/', 'categories', 'discover', category.id]" detail *ngFor="let category of loadedCategories">
+              <ion-label>
+                <p>{{ category.id }}<p>
+                <p>{{ category.name }}</p>
+                <p>{{ category.description }}</p>
+              </ion-label>
+            </ion-item>
+          </div>
         </ion-list>
       </ion-col>
     </ion-row>

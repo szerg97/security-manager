@@ -4,7 +4,7 @@
       <ion-menu-button menu="m1"></ion-menu-button>
     </ion-buttons>
     <ion-title>Distributors</ion-title>
-    <ion-buttons slot="primary">
+    <ion-buttons *ngIf="isAdmin" slot="primary">
       <ion-button routerLink="/distributors/new-distributor">
         <ion-icon name="add" slot="icon-only"></ion-icon>
       </ion-button>
@@ -24,28 +24,39 @@
    <ion-row>
      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
        <ion-list
-         *ngIf="(loadedDistributors)"
-       >
-         <ion-item-sliding *ngFor="let distributor of loadedDistributors"
-         #slidingDistributors>
-           <ion-item
-           [routerLink]="['/', 'distributors', distributor.id]" detail
-           >
-             <ion-label>
-               <p>{{ distributor.id }}<p>
-               <p>{{ distributor.name }}</p>
-               <p>{{ distributor.status === true ? 'Open' : 'Closed' }}</p>
-             </ion-label>
-           </ion-item>
-           <ion-item-options>
-             <ion-item-option
-               color="danger"
-               (click)="onDeleteDistributor(distributor.id, slidingDistributors)"
-             >
-               <ion-icon name="trash" slot="icon-only"></ion-icon>
-             </ion-item-option>
-           </ion-item-options>
-         </ion-item-sliding>
+         *ngIf="(loadedDistributors)">
+         <div *ngIf="isAdmin">
+          <ion-item-sliding *ngFor="let distributor of loadedDistributors"
+          #slidingDistributors>
+            <ion-item
+            [routerLink]="['/', 'distributors', distributor.id]" detail
+            >
+              <ion-label>
+                <p>{{ distributor.id }}<p>
+                <p>{{ distributor.name }}</p>
+                <p>{{ distributor.status === true ? 'Open' : 'Closed' }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item-options>
+              <ion-item-option
+                color="danger"
+                (click)="onDeleteDistributor(distributor.id, slidingDistributors)"
+              >
+                <ion-icon name="trash" slot="icon-only"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+         </div>
+         <div *ngIf="!isAdmin">
+          <ion-item
+          [routerLink]="['/', 'distributors', distributor.id]" detail *ngFor="let distributor of loadedDistributors">
+            <ion-label>
+              <p>{{ distributor.id }}<p>
+              <p>{{ distributor.name }}</p>
+              <p>{{ distributor.status === true ? 'Open' : 'Closed' }}</p>
+            </ion-label>
+          </ion-item>
+         </div>
        </ion-list>
      </ion-col>
    </ion-row>

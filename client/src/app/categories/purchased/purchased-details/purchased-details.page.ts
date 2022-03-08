@@ -14,14 +14,15 @@ export class PurchasedDetailsPage implements OnInit {
 
   security: Security;
 
+  isGeneral = false;
+  isInterests = false;
+  isYields = false;
+
   constructor(
     private service: SecurityService,
-    private navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
-    private menuCtrl: MenuController,
     public modalController: ModalController
     ) {
-      this.menuCtrl.enable(false, 'm1');
     }
 
   ngOnInit() {
@@ -43,10 +44,34 @@ export class PurchasedDetailsPage implements OnInit {
     });
   }
 
+  async onGeneral(){
+    this.isInterests = false;
+    this.isYields = false;
+    this.isGeneral = true;
+    return await this.presentModal();
+  }
+
+  async onInterests(){
+    this.isInterests = true;
+    this.isYields = false;
+    this.isGeneral = false;
+    return await this.presentModal();
+  }
+
+  async onYields(){
+    this.isInterests = false;
+    this.isYields = true;
+    this.isGeneral = false;
+    return await this.presentModal();
+  }
+
   async presentModal() {
     const modal = this.modalController.create({
       component: ModalPageComponent,
       componentProps: {
+        'isGeneral': this.isGeneral,
+        'isInterests': this.isInterests,
+        'isYields': this.isYields,
         'security': this.security
       }
     });

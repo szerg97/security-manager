@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController, NavController } from '@ionic/angular';
 import { Category } from 'src/app/_models/category';
+import { AuthService } from 'src/app/_services/auth.service';
 import { CategoryService } from 'src/app/_services/category.service';
 
 @Component({
@@ -13,15 +14,18 @@ export class CategoryDetailsPage implements OnInit {
   
   category: Category;
 
+  isAdmin: boolean;
+
   constructor(
     private service: CategoryService,
     private navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
-    private menuCtrl: MenuController) {
-      this.menuCtrl.enable(false, 'm1');
+    private menuCtrl: MenuController,
+    private authServcie: AuthService) {
     }
 
   ngOnInit() {
+    this.isAdmin = this.authServcie.getUserRoles.includes('gsec');
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if(!paramMap.has('id')){
         return;

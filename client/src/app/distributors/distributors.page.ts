@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IonItemSliding, LoadingController, MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Distributor } from '../_models/distributor';
+import { AuthService } from '../_services/auth.service';
 import { DistributorService } from '../_services/distributor.service';
 
 @Component({
@@ -14,14 +15,18 @@ export class DistributorsPage implements OnInit, OnDestroy {
   loadedDistributors: Distributor[];
   isLoading = false;
   private distributorsSub: Subscription;
+  isAdmin: boolean;
 
   constructor(
     public distributorService: DistributorService,
     private menuCtrl: MenuController,
-    private loadingCtrl: LoadingController) 
+    private loadingCtrl: LoadingController,
+    private authService: AuthService
+    ) 
     {}
 
   ngOnInit() {
+    this.isAdmin = this.authService.getUserRoles.includes('gsec');
     this.distributorsSub = this.distributorService.distributors.subscribe(distributors => {
       this.loadedDistributors = distributors;
       this.menuCtrl.enable(true);

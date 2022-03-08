@@ -10,10 +10,12 @@ import { Security } from 'src/app/_models/security';
 export class ModalPageComponent {
   // Data passed in by componentProps
   @Input() security: Security;
+  @Input() isGeneral: boolean;
+  @Input() isInterests: boolean;
+  @Input() isYields: boolean;
 
-  constructor(public modalController: ModalController,
-    private menuCtrl: MenuController) { 
-      this.menuCtrl.enable(false, 'm1');
+  constructor(public modalController: ModalController) { 
+      console.log(this.isGeneral, this.isInterests, this.isYields, this.security);
     }
 
   dismiss() {
