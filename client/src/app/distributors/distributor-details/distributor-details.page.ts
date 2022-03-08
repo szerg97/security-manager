@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController, NavController } from '@ionic/angular';
 import { Distributor } from 'src/app/_models/distributor';
+import { AuthService } from 'src/app/_services/auth.service';
 import { DistributorService } from 'src/app/_services/distributor.service';
 
 @Component({
@@ -13,15 +14,17 @@ export class DistributorDetailsPage implements OnInit {
 
   distributor: Distributor;
 
+  isAdmin: boolean;
+
   constructor(
     private service: DistributorService,
-    private navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
-    private menuCtrl: MenuController) {
-      this.menuCtrl.enable(false, 'm1');
+    private authService: AuthService
+    ) {
     }
 
   ngOnInit() {
+    this.isAdmin = this.authService.getUserRoles.includes('gsec');
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if(!paramMap.has('id')){
         return;
