@@ -2,7 +2,6 @@ package com.secman.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,8 +40,8 @@ public class Distributor extends GSecEntity {
     private Address address;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Security.class, mappedBy = "distributor")
-    private List<Security> securities;
+    @OneToMany(targetEntity = Transaction.class, mappedBy = "distributor")
+    private List<Transaction> securities;
 
     public Distributor(String name, String email, String phone, Boolean status, Address address) {
         super();

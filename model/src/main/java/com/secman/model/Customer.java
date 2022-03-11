@@ -59,8 +59,8 @@ public class Customer extends GSecEntity {
     @OneToMany(targetEntity = Feedback.class, mappedBy = "customer")
     private List<Feedback> feedbacks;
     @JsonIgnore
-    @OneToMany(targetEntity = Security.class, mappedBy = "customer")
-    private List<Security> securities;
+    @OneToMany(targetEntity = Portfolio.class, mappedBy = "customer")
+    private List<Portfolio> portfolios;
 
     public Customer(String firstName, String lastName, String email, String phone, String idCard, LocalDate dateOfBirth, Address address) {
         super();

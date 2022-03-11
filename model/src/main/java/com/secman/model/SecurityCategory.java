@@ -2,7 +2,6 @@ package com.secman.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,8 +28,8 @@ public class SecurityCategory extends GSecEntity {
     private String description;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Security.class, mappedBy = "category")
-    private List<Security> securities;
+    @OneToMany(targetEntity = Transaction.class, mappedBy = "category")
+    private List<Transaction> securities;
 
     public SecurityCategory(String name, String description) {
         super();

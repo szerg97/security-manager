@@ -2,22 +2,27 @@ package com.secman.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
+import java.util.Currency;
 
 @Entity
-@Table(name = "securities")
+@Table(name = "transactions")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Security extends GSecEntity {
+public class Transaction extends GSecEntity {
 
+    @Schema(description = "Currency of security")
+    @NotBlank(message = "error.security.currency.not-blank")
+    private Currency currency;
+    @Schema(description = "Exchange rate of security")
+    @NotBlank(message = "error.security.exchange-rate.not-blank")
+    private Double exchangeRate;
     @Schema(description = "Face value of security")
     @NotBlank(message = "error.security.face-value.not-blank")
     private Double faceValue;
@@ -58,14 +63,16 @@ public class Security extends GSecEntity {
     @JsonIgnore
     @ManyToOne(targetEntity = Distributor.class)
     private Distributor distributor;
-    @Schema(description = "Customer of security")
-    @NotBlank(message = "error.security.customer.not-blank")
+    @Schema(description = "Portfolio that the sec belongs to")
+    @NotBlank(message = "error.security.portfolio.not-blank")
     @JsonIgnore
-    @ManyToOne(targetEntity = Customer.class)
-    private Customer customer;
+    @ManyToOne(targetEntity = Portfolio.class)
+    private Portfolio portfolio;
 
-    public Security(Double faceValue, Double denomination, Double grossValue, Double netValue, Double term, Double interest, Double accruedInterest, Boolean fixedInterest, Double yield, Double referenceYield, SecurityCategory category, Distributor distributor, Customer customer) {
+    public Transaction(Currency currency, Double exchangeRate, Double faceValue, Double denomination, Double grossValue, Double netValue, Double term, Double interest, Double accruedInterest, Boolean fixedInterest, Double yield, Double referenceYield, SecurityCategory category, Distributor distributor, Portfolio portfolio) {
         super();
+        this.currency = currency;
+        this.exchangeRate = exchangeRate;
         this.faceValue = faceValue;
         this.denomination = denomination;
         this.grossValue = grossValue;
@@ -78,22 +85,24 @@ public class Security extends GSecEntity {
         this.referenceYield = referenceYield;
         this.category = category;
         this.distributor = distributor;
-        this.customer = customer;
+        this.portfolio = portfolio;
     }
 
-    public void copyFrom(Security security) {
-        this.faceValue = security.getFaceValue();
-        this.denomination = security.getDenomination();
-        this.grossValue = security.getGrossValue();
-        this.netValue = security.getNetValue();
-        this.term = security.getTerm();
-        this.interest = security.getInterest();
-        this.accruedInterest = security.getAccruedInterest();
-        this.fixedInterest = security.getFixedInterest();
-        this.yield = security.getYield();
-        this.referenceYield = security.getReferenceYield();
-        this.category = security.getCategory();
-        this.distributor = security.getDistributor();
-        this.customer = security.getCustomer();
+    public void copyFrom(Transaction transaction) {
+        this.currency = transaction.getCurrency();
+        this.exchangeRate = transaction.getExchangeRate();
+        this.faceValue = transaction.getFaceValue();
+        this.denomination = transaction.getDenomination();
+        this.grossValue = transaction.getGrossValue();
+        this.netValue = transaction.getNetValue();
+        this.term = transaction.getTerm();
+        this.interest = transaction.getInterest();
+        this.accruedInterest = transaction.getAccruedInterest();
+        this.fixedInterest = transaction.getFixedInterest();
+        this.yield = transaction.getYield();
+        this.referenceYield = transaction.getReferenceYield();
+        this.category = transaction.getCategory();
+        this.distributor = transaction.getDistributor();
+        this.portfolio = transaction.getPortfolio();
     }
 }

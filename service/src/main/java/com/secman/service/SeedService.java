@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Currency;
 
 @Service
 @AllArgsConstructor
@@ -21,7 +22,8 @@ public class SeedService {
     private final FeedbackRepository            feedbackRepository;
     private final MessageRepository             messageRepository;
     private final SecurityCategoryRepository    categoryRepository;
-    private final SecurityRepository            securityRepository;
+    private final TransactionRepository transactionRepository;
+    private final PortfolioRepository portfolioRepository;
 
     public void seedCountries(){
         if (!countryRepository.findAll().isEmpty())
@@ -120,6 +122,23 @@ public class SeedService {
         );
         customerRepository.saveAll(Arrays.asList(c1, c2, c3));
     }
+    public void seedPortfolios(){
+        if (!portfolioRepository.findAll().isEmpty())
+            return;
+        Portfolio p1 = new Portfolio(
+                1500000.0,
+                customerRepository.findById(1L).get()
+        );
+        Portfolio p2 = new Portfolio(
+                1800000.0,
+                customerRepository.findById(1L).get()
+        );
+        Portfolio p3 = new Portfolio(
+                2500000.0,
+                customerRepository.findById(1L).get()
+        );
+        portfolioRepository.saveAll(Arrays.asList(p1, p2, p3));
+    }
     public void seedDistributors(){
         if (!distributorRepository.findAll().isEmpty())
             return;
@@ -191,11 +210,13 @@ public class SeedService {
         );
         categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
     }
-    public void seedSecurities(){
-        if (!securityRepository.findAll().isEmpty())
+    public void seedTransactions(){
+        if (!transactionRepository.findAll().isEmpty())
             return;
 
-        Security c1 = new Security(
+        Transaction c1 = new Transaction(
+                Currency.getInstance("HUF"),
+                340.0,
                 55000.0,
                 55000.0,
                 55000.0,
@@ -208,9 +229,11 @@ public class SeedService {
                 7.0,
                 categoryRepository.findById(1L).get(),
                 distributorRepository.findById(1L).get(),
-                customerRepository.findById(1L).get()
+                portfolioRepository.findById(1L).get()
         );
-        Security c2 = new Security(
+        Transaction c2 = new Transaction(
+                Currency.getInstance("HUF"),
+                339.8,
                 35000.0,
                 35000.0,
                 35000.0,
@@ -223,9 +246,11 @@ public class SeedService {
                 7.0,
                 categoryRepository.findById(2L).get(),
                 distributorRepository.findById(2L).get(),
-                customerRepository.findById(2L).get()
+                portfolioRepository.findById(2L).get()
         );
-        Security c3 = new Security(
+        Transaction c3 = new Transaction(
+                Currency.getInstance("HUF"),
+                344.5,
                 75000.0,
                 75000.0,
                 75000.0,
@@ -238,9 +263,9 @@ public class SeedService {
                 10.0,
                 categoryRepository.findById(3L).get(),
                 distributorRepository.findById(3L).get(),
-                customerRepository.findById(3L).get()
+                portfolioRepository.findById(3L).get()
         );
-        securityRepository.saveAll(Arrays.asList(c1, c2, c3));
+        transactionRepository.saveAll(Arrays.asList(c1, c2, c3));
     }
 
 }

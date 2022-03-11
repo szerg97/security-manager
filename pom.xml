@@ -21,9 +21,9 @@
     </parent>
 
     <groupId>com.secman</groupId>
-    <artifactId>security-manager</artifactId>
+    <artifactId>transaction-manager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>security-manager</name>
+    <name>transaction-manager</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

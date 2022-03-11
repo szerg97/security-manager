@@ -98,7 +98,8 @@ public class Application {
             seeder.seedMessages();
             seeder.seedFeedbacks();
             seeder.seedCategories();
-            seeder.seedSecurities();
+            seeder.seedPortfolios();
+            seeder.seedTransactions();
         };
     }
 }
