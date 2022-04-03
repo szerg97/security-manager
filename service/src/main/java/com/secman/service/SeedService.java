@@ -17,7 +17,7 @@ public class SeedService {
     private final CityRepository cityRepository;
     private final AddressRepository addressRepository;
     private final CustomerRepository customerRepository;
-    private final DistributorRepository distributorRepository;
+    private final IssuerRepository issuerRepository;
     private final EmployeeRepository            employeeRepository;
     private final FeedbackRepository            feedbackRepository;
     private final MessageRepository             messageRepository;
@@ -139,32 +139,32 @@ public class SeedService {
         );
         portfolioRepository.saveAll(Arrays.asList(p1, p2, p3));
     }
-    public void seedDistributors(){
-        if (!distributorRepository.findAll().isEmpty())
+    public void seedIssuers(){
+        if (!issuerRepository.findAll().isEmpty())
             return;
 
-        Distributor c1 = new Distributor(
+        Issuer c1 = new Issuer(
                 "Erste Bank",
-                "distributor@distributor.distributor",
+                "issuer@issuer.issuer",
                 "0612456969",
                 true,
                 addressRepository.findById(1L).get()
         );
-        Distributor c2 = new Distributor(
+        Issuer c2 = new Issuer(
                 "OTP Bank",
                 "info@otpbank.hu",
                 "0615554545",
                 true,
                 addressRepository.findById(1L).get()
         );
-        Distributor c3 = new Distributor(
+        Issuer c3 = new Issuer(
                 "MKB Bank",
                 "info@mkbbank.hu",
                 "06953342323",
                 true,
                 addressRepository.findById(1L).get()
         );
-        distributorRepository.saveAll(Arrays.asList(c1, c2, c3));
+        issuerRepository.saveAll(Arrays.asList(c1, c2, c3));
     }
     public void seedEmployees(){
         if (!employeeRepository.findAll().isEmpty())
@@ -228,7 +228,7 @@ public class SeedService {
                 7.0,
                 7.0,
                 categoryRepository.findById(1L).get(),
-                distributorRepository.findById(1L).get(),
+                issuerRepository.findById(1L).get(),
                 portfolioRepository.findById(1L).get()
         );
         Transaction c2 = new Transaction(
@@ -245,7 +245,7 @@ public class SeedService {
                 7.0,
                 7.0,
                 categoryRepository.findById(2L).get(),
-                distributorRepository.findById(2L).get(),
+                issuerRepository.findById(2L).get(),
                 portfolioRepository.findById(2L).get()
         );
         Transaction c3 = new Transaction(
@@ -262,7 +262,7 @@ public class SeedService {
                 10.0,
                 10.0,
                 categoryRepository.findById(3L).get(),
-                distributorRepository.findById(3L).get(),
+                issuerRepository.findById(3L).get(),
                 portfolioRepository.findById(3L).get()
         );
         transactionRepository.saveAll(Arrays.asList(c1, c2, c3));

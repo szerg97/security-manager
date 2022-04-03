@@ -1,6 +1,8 @@
 package com.secman.application.controller;
 
+import com.secman.model.Portfolio;
 import com.secman.model.Transaction;
+import com.secman.service.PortfolioService;
 import com.secman.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,6 +33,7 @@ import java.util.List;
 public class TransactionController {
 
     private final TransactionService transactionService;
+    private final PortfolioService portfolioService;
     @Autowired
     private HttpServletRequest request;
 
@@ -59,38 +62,39 @@ public class TransactionController {
             }
     )
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Transaction>> getAllSecurities(){
+    public ResponseEntity<List<Transaction>> getAllTransactions(){
         return ResponseEntity.ok(this.transactionService.getAll());
     }
 
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Request successful",
-//                    content = { @Content(mediaType = "application/json",
-//                            array = @ArraySchema(schema = @Schema(implementation = Transaction.class))) }),
-//            @ApiResponse(responseCode = "400", description = "Validation error",
-//                    content = { @Content(mediaType = "application/json",
-//                            array = @ArraySchema(schema = @Schema(implementation = Transaction.class))) }),
-//            @ApiResponse(responseCode = "401", description = "Token expired",
-//                    content = { @Content(mediaType = "application/json")}),
-//            @ApiResponse(responseCode = "403", description = "You do not have permission",
-//                    content = { @Content(mediaType = "application/json")}),
-//            @ApiResponse(responseCode = "302", description = "You are not logged in, redirecting",
-//                    content = { @Content(mediaType = "application/json")}),
-//            @ApiResponse(responseCode = "500", description = "Internal server error",
-//                    content = { @Content(mediaType = "application/json")}),
-//    })
-//    @Operation(
-//            summary = "Query all securities",
-//            security = {
-//                    @SecurityRequirement(name = "apikey", scopes = {"gsec", "customer"}),
-//                    @SecurityRequirement(name = "openid", scopes = {"gsec", "customer"}),
-//                    @SecurityRequirement(name = "oauth2", scopes = {"gsec", "customer"})
-//            }
-//    )
-//    @GetMapping(path = "/self", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<Transaction>> getSecuritiesByCustomer(){
-//        return ResponseEntity.ok(this.transactionService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername()));
-//    }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Request successful",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Transaction.class))) }),
+            @ApiResponse(responseCode = "400", description = "Validation error",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Transaction.class))) }),
+            @ApiResponse(responseCode = "401", description = "Token expired",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "403", description = "You do not have permission",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "302", description = "You are not logged in, redirecting",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = { @Content(mediaType = "application/json")}),
+    })
+    @Operation(
+            summary = "Query all securities",
+            security = {
+                    @SecurityRequirement(name = "apikey", scopes = {"gsec", "customer"}),
+                    @SecurityRequirement(name = "openid", scopes = {"gsec", "customer"}),
+                    @SecurityRequirement(name = "oauth2", scopes = {"gsec", "customer"})
+            }
+    )
+    @GetMapping(path = "/self", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Transaction>> getTransactionsByCustomer(){
+        Portfolio portfolio = this.portfolioService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername());
+        return ResponseEntity.ok(this.transactionService.getByPortfolio(portfolio));
+    }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
@@ -117,7 +121,7 @@ public class TransactionController {
             }
     )
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Transaction> getOneSecurity(
+    public ResponseEntity<Transaction> getOneTransaction(
             @Parameter(name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
         return ResponseEntity.ok(this.transactionService.getOne(id));
@@ -147,7 +151,7 @@ public class TransactionController {
             }
     )
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Transaction> deleteOneSecurity(
+    public ResponseEntity<Transaction> deleteOneTransaction(
             @Parameter (name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
         return ResponseEntity.ok(this.transactionService.deleteOneById(id));
@@ -177,7 +181,7 @@ public class TransactionController {
             }
     )
     @PostMapping("")
-    public ResponseEntity<Transaction> addOneSecurity(
+    public ResponseEntity<Transaction> addOneTransaction(
             @Valid
             @Parameter (name = "security", required = true)
             @RequestBody (required = true) Transaction transaction){
@@ -208,7 +212,7 @@ public class TransactionController {
             }
     )
     @PutMapping("")
-    public ResponseEntity<Transaction> updateOneSecurity(
+    public ResponseEntity<Transaction> updateOneTransaction(
             @Parameter (name = "security", required = true)
             @RequestBody (required = true) Transaction transaction){
         return ResponseEntity.ok(this.transactionService.updateOne(transaction));

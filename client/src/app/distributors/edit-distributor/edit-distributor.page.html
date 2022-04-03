@@ -1,26 +1,26 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons *ngIf="(distributor)" slot="start">
-      <ion-back-button defaultHref="/distributors/{{distributor.id}}"></ion-back-button>
+    <ion-buttons *ngIf="(issuer)" slot="start">
+      <ion-back-button defaultHref="/distributors/{{issuer.id}}"></ion-back-button>
     </ion-buttons>
-    <ion-title>Edit distributor</ion-title>
+    <ion-title>Edit issuer</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<form id="editForm" #editForm="ngForm" (ngSubmit)="onSubmit(editForm)" *ngIf="(distributor)">
+<form id="editForm" #editForm="ngForm" (ngSubmit)="onSubmit(editForm)" *ngIf="(issuer)">
   <ion-grid>
     <ion-row>
      <ion-col sizeSm="6" offsetSm="3">
        <ion-item>
          <ion-label position="floating">Name</ion-label>
-         <ion-input 
-         type="text" 
+         <ion-input
+         type="text"
          name="name"
          ngModel
          required
          #nameCtrl="ngModel"
-         placeholder="{{distributor.name}}"
+         placeholder="{{issuer.name}}"
          >
         </ion-input>
        </ion-item>
@@ -35,7 +35,7 @@
          name="email"
          ngModel
          #descriptionCtrl="ngModel"
-         placeholder="{{distributor.email}}"
+         placeholder="{{issuer.email}}"
          ></ion-input>
        </ion-item>
      </ion-col>
@@ -49,7 +49,7 @@
           name="phone"
           ngModel
           #statusCtrl="ngModel"
-          placeholder="{{distributor.phone}}"
+          placeholder="{{issuer.phone}}"
           ></ion-input>
         </ion-item>
       </ion-col>

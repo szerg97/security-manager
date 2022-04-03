@@ -58,18 +58,18 @@ public class Transaction extends GSecEntity {
     @JsonIgnore
     @ManyToOne(targetEntity = SecurityCategory.class)
     private SecurityCategory category;
-    @Schema(description = "Distributor of security")
-    @NotBlank(message = "error.security.distributor.not-blank")
+    @Schema(description = "Issuer of security")
+    @NotBlank(message = "error.security.issuer.not-blank")
     @JsonIgnore
-    @ManyToOne(targetEntity = Distributor.class)
-    private Distributor distributor;
+    @ManyToOne(targetEntity = Issuer.class)
+    private Issuer issuer;
     @Schema(description = "Portfolio that the sec belongs to")
     @NotBlank(message = "error.security.portfolio.not-blank")
     @JsonIgnore
     @ManyToOne(targetEntity = Portfolio.class)
     private Portfolio portfolio;
 
-    public Transaction(Currency currency, Double exchangeRate, Double faceValue, Double denomination, Double grossValue, Double netValue, Double term, Double interest, Double accruedInterest, Boolean fixedInterest, Double yield, Double referenceYield, SecurityCategory category, Distributor distributor, Portfolio portfolio) {
+    public Transaction(Currency currency, Double exchangeRate, Double faceValue, Double denomination, Double grossValue, Double netValue, Double term, Double interest, Double accruedInterest, Boolean fixedInterest, Double yield, Double referenceYield, SecurityCategory category, Issuer issuer, Portfolio portfolio) {
         super();
         this.currency = currency;
         this.exchangeRate = exchangeRate;
@@ -84,7 +84,7 @@ public class Transaction extends GSecEntity {
         this.yield = yield;
         this.referenceYield = referenceYield;
         this.category = category;
-        this.distributor = distributor;
+        this.issuer = issuer;
         this.portfolio = portfolio;
     }
 
@@ -102,7 +102,7 @@ public class Transaction extends GSecEntity {
         this.yield = transaction.getYield();
         this.referenceYield = transaction.getReferenceYield();
         this.category = transaction.getCategory();
-        this.distributor = transaction.getDistributor();
+        this.issuer = transaction.getIssuer();
         this.portfolio = transaction.getPortfolio();
     }
 }

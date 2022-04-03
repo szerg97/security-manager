@@ -32,8 +32,8 @@ public class Address extends GSecEntity{
     private City city;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Distributor.class, mappedBy = "address")
-    private List<Distributor> distributors;
+    @OneToMany(targetEntity = Issuer.class, mappedBy = "address")
+    private List<Issuer> issuers;
     @JsonIgnore
     @OneToMany(targetEntity = Customer.class, mappedBy = "address")
     private List<Customer> customers;

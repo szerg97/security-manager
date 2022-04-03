@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -18,7 +15,7 @@ import java.util.List;
 public class Portfolio extends GSecEntity{
 
     private Double money;
-    @ManyToOne(targetEntity = Customer.class)
+    @OneToOne(targetEntity = Customer.class)
     private Customer customer;
 
     @OneToMany(targetEntity = Transaction.class, mappedBy = "portfolio")

@@ -1,7 +1,7 @@
 package com.secman.application.controller;
 
-import com.secman.model.Distributor;
-import com.secman.service.DistributorService;
+import com.secman.model.Issuer;
+import com.secman.service.IssuerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -21,21 +21,21 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/distributors")
+@RequestMapping(path = "/issuers")
 @CrossOrigin("*")
 @AllArgsConstructor
 @Validated
-public class DistributorController {
+public class IssuerController {
 
-    private final DistributorService distributorService;
+    private final IssuerService issuerService;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -46,7 +46,7 @@ public class DistributorController {
                     content = { @Content(mediaType = "application/json")}),
     })
     @Operation(
-            summary = "Query all distributors",
+            summary = "Query all issuers",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec", "customer"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec", "customer"}),
@@ -54,17 +54,17 @@ public class DistributorController {
             }
     )
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Distributor>> getAllDistributors(){
-        return ResponseEntity.ok(this.distributorService.getAll());
+    public ResponseEntity<List<Issuer>> getAllIssuers(){
+        return ResponseEntity.ok(this.issuerService.getAll());
     }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -75,7 +75,7 @@ public class DistributorController {
                     content = { @Content(mediaType = "application/json")}),
     })
     @Operation(
-            summary = "Query distributor",
+            summary = "Query issuer",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec", "customer"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec", "customer"}),
@@ -83,19 +83,19 @@ public class DistributorController {
             }
     )
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Distributor> getOneDistributor(
+    public ResponseEntity<Issuer> getOneIssuer(
             @Parameter(name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
-        return ResponseEntity.ok(this.distributorService.getOne(id));
+        return ResponseEntity.ok(this.issuerService.getOne(id));
     }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -105,7 +105,7 @@ public class DistributorController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = { @Content(mediaType = "application/json")}),
     })
-    @Operation(summary = "Deleting distributor",
+    @Operation(summary = "Deleting issuer",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec"}),
@@ -113,19 +113,19 @@ public class DistributorController {
             }
     )
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Distributor> deleteOneDistributor(
+    public ResponseEntity<Issuer> deleteOneIssuer(
             @Parameter (name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
-        return ResponseEntity.ok(this.distributorService.deleteOneById(id));
+        return ResponseEntity.ok(this.issuerService.deleteOneById(id));
     }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -135,7 +135,7 @@ public class DistributorController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = { @Content(mediaType = "application/json")}),
     })
-    @Operation(summary = "Adding distributor",
+    @Operation(summary = "Adding issuer",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec"}),
@@ -143,20 +143,20 @@ public class DistributorController {
             }
     )
     @PostMapping("")
-    public ResponseEntity<Distributor> addOneDistributor(
+    public ResponseEntity<Issuer> addOneIssuer(
             @Valid
-            @Parameter (name = "distributor", required = true)
-            @RequestBody (required = true) Distributor distributor){
-        return ResponseEntity.created(URI.create("/distributors/{id}")).body(this.distributorService.addOne(distributor));
+            @Parameter (name = "issuer", required = true)
+            @RequestBody (required = true) Issuer issuer){
+        return ResponseEntity.created(URI.create("/issuers/{id}")).body(this.issuerService.addOne(issuer));
     }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Distributor.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Issuer.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -166,7 +166,7 @@ public class DistributorController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = { @Content(mediaType = "application/json")}),
     })
-    @Operation(summary = "Editing distributor",
+    @Operation(summary = "Editing issuer",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec"}),
@@ -174,10 +174,10 @@ public class DistributorController {
             }
     )
     @PutMapping("")
-    public ResponseEntity<Distributor> updateOneDistributor(
-            @Parameter (name = "distributor", required = true)
-            @RequestBody (required = true) Distributor distributor){
-        return ResponseEntity.ok(this.distributorService.updateOne(distributor));
+    public ResponseEntity<Issuer> updateOneIssuer(
+            @Parameter (name = "issuer", required = true)
+            @RequestBody (required = true) Issuer issuer){
+        return ResponseEntity.ok(this.issuerService.updateOne(issuer));
     }
 }
 

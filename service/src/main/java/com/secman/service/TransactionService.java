@@ -1,6 +1,7 @@
 package com.secman.service;
 
-import com.secman.model.Distributor;
+import com.secman.model.Issuer;
+import com.secman.model.Portfolio;
 import com.secman.model.Transaction;
 import com.secman.model.SecurityCategory;
 import com.secman.repository.TransactionRepository;
@@ -20,12 +21,12 @@ public class TransactionService {
         return this.transactionRepository.findAll();
     }
 
-//    public List<Transaction> getByCustomer(String email){
-//        return this.transactionRepository.findByCustomerEmail(email);
-//    }
+    public List<Transaction> getByPortfolio(Portfolio portfolio){
+        return this.transactionRepository.findByPortfolio(portfolio);
+    }
 
-    public List<Transaction> getByDistributor(Distributor distributor){
-        return this.transactionRepository.findByDistributor(distributor);
+    public List<Transaction> getByIssuer(Issuer issuer){
+        return this.transactionRepository.findByIssuer(issuer);
     }
 
     public List<Transaction> getByCategory(SecurityCategory category){
