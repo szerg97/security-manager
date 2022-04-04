@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Security } from 'src/app/_models/security';
+import { Transaction } from 'src/app/_models/transaction';
 import { AuthService } from 'src/app/_services/auth.service';
 import { SecurityService } from 'src/app/_services/security.service';
 
@@ -12,7 +12,7 @@ import { SecurityService } from 'src/app/_services/security.service';
 })
 export class PurchasedPage implements OnInit {
 
-  loadedSecurities: Security[];
+  loadedSecurities: Transaction[];
   isLoading = false;
   private securitiesSub: Subscription;
 

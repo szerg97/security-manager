@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button menu="m1"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Distributors</ion-title>
+    <ion-title>Issuers</ion-title>
     <ion-buttons *ngIf="isAdmin" slot="primary">
       <ion-button routerLink="/distributors/new-issuer">
         <ion-icon name="add" slot="icon-only"></ion-icon>
@@ -16,7 +16,7 @@
   <ion-grid *ngIf="!isLoading && (!loadedDistributors || loadedDistributors.length <= 0)">
    <ion-row>
      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
-       <p>There are no distributors right now, please come back later!</p>
+       <p>There are no issuers right now, please come back later!</p>
      </ion-col>
    </ion-row>
   </ion-grid>

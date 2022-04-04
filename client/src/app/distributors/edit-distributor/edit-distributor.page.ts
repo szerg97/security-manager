@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Distributor } from 'src/app/_models/distributor';
+import { Issuer } from 'src/app/_models/issuer';
 import { DistributorService } from 'src/app/_services/distributor.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { DistributorService } from 'src/app/_services/distributor.service';
 })
 export class EditDistributorPage implements OnInit, OnDestroy {
 
-  distributor: Distributor;
+  distributor: Issuer;
   isLoading = false;
   private distributorSub: Subscription;
 

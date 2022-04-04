@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { Distributor } from 'src/app/_models/distributor';
+import { Issuer } from 'src/app/_models/issuer';
 import { DistributorService } from 'src/app/_services/distributor.service';
 
 @Component({
@@ -42,7 +42,7 @@ export class NewDistributorPage implements OnInit {
             email,
             phone,
             status
-          } as Distributor
+          } as Issuer
         )
         .subscribe(() => {
           loadingEl.dismiss();

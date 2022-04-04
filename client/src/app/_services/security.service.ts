@@ -4,16 +4,16 @@ import { BehaviorSubject } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Customer } from '../_models/customer';
-import { Security } from '../_models/security';
+import { Transaction } from '../_models/transaction';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SecurityService {
 
-  baseUrl = `${environment.apiUrl}securities`;
+  baseUrl = `${environment.apiUrl}transactions`;
 
-  private _securities = new BehaviorSubject<Security[]>([]);
+  private _securities = new BehaviorSubject<Transaction[]>([]);
 
   get securities() {
     return this._securities.asObservable();
@@ -22,10 +22,10 @@ export class SecurityService {
   constructor(private http: HttpClient) { }
 
   fetchSecuritiesByCustomer(){
-    return this.http.get<Security[]>(`${this.baseUrl}/self`)
+    return this.http.get<Transaction[]>(`${this.baseUrl}/self`)
     .pipe(
       map(response => {
-        const securities: Security[] = [];
+        const securities: Transaction[] = [];
         for(const data in response){
           securities.push(response[data]);
         }
@@ -39,17 +39,17 @@ export class SecurityService {
   }
 
   getSecurity(id: string){
-    return this.http.get<Security>(`${this.baseUrl}/${id}`)
+    return this.http.get<Transaction>(`${this.baseUrl}/${id}`)
     .pipe(
       map(secData => {
-        return secData as Security;
+        return secData as Transaction;
       })
     );
   }
 
-  addSecurity(model: Security){
+  addSecurity(model: Transaction){
     let generatedId: string;
-    return this.http.post<Security>(this.baseUrl, model)
+    return this.http.post<Transaction>(this.baseUrl, model)
     .pipe(
       switchMap(secData => {
         generatedId = secData.id;
@@ -64,7 +64,7 @@ export class SecurityService {
   }
 
   deleteSecurity(id: string){
-    return this.http.delete<Security>(`${this.baseUrl}/${id}`)
+    return this.http.delete<Transaction>(`${this.baseUrl}/${id}`)
     .pipe(
       switchMap(() => {
         return this.securities;

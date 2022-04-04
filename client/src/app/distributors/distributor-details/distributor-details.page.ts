@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController, NavController } from '@ionic/angular';
-import { Distributor } from 'src/app/_models/distributor';
+import { Issuer } from 'src/app/_models/issuer';
 import { AuthService } from 'src/app/_services/auth.service';
 import { DistributorService } from 'src/app/_services/distributor.service';
 
@@ -12,7 +12,7 @@ import { DistributorService } from 'src/app/_services/distributor.service';
 })
 export class DistributorDetailsPage implements OnInit {
 
-  distributor: Distributor;
+  distributor: Issuer;
 
   isAdmin: boolean;
 

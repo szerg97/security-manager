@@ -125,17 +125,18 @@ public class SeedService {
     public void seedPortfolios(){
         if (!portfolioRepository.findAll().isEmpty())
             return;
+
         Portfolio p1 = new Portfolio(
                 1500000.0,
                 customerRepository.findById(1L).get()
         );
         Portfolio p2 = new Portfolio(
                 1800000.0,
-                customerRepository.findById(1L).get()
+                customerRepository.findById(2L).get()
         );
         Portfolio p3 = new Portfolio(
                 2500000.0,
-                customerRepository.findById(1L).get()
+                customerRepository.findById(3L).get()
         );
         portfolioRepository.saveAll(Arrays.asList(p1, p2, p3));
     }
@@ -155,14 +156,14 @@ public class SeedService {
                 "info@otpbank.hu",
                 "0615554545",
                 true,
-                addressRepository.findById(1L).get()
+                addressRepository.findById(2L).get()
         );
         Issuer c3 = new Issuer(
                 "MKB Bank",
                 "info@mkbbank.hu",
                 "06953342323",
                 true,
-                addressRepository.findById(1L).get()
+                addressRepository.findById(3L).get()
         );
         issuerRepository.saveAll(Arrays.asList(c1, c2, c3));
     }

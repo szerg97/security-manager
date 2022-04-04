@@ -1,6 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { MenuController, ModalController } from '@ionic/angular';
-import { Security } from 'src/app/_models/security';
+import { Transaction } from 'src/app/_models/transaction';
 
 @Component({
   selector: 'app-modal-page',
@@ -9,7 +9,7 @@ import { Security } from 'src/app/_models/security';
 })
 export class ModalPageComponent {
   // Data passed in by componentProps
-  @Input() security: Security;
+  @Input() security: Transaction;
   @Input() isGeneral: boolean;
   @Input() isInterests: boolean;
   @Input() isYields: boolean;

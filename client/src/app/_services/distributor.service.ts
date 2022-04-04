@@ -3,16 +3,16 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Distributor } from '../_models/distributor';
+import { Issuer } from '../_models/issuer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DistributorService {
 
-  baseUrl = `${environment.apiUrl}distributors`;
+  baseUrl = `${environment.apiUrl}issuers`;
 
-  private _distributors = new BehaviorSubject<Distributor[]>([]);
+  private _distributors = new BehaviorSubject<Issuer[]>([]);
 
   get distributors() {
     return this._distributors.asObservable();
@@ -22,10 +22,10 @@ export class DistributorService {
   }
 
   fetchDistributors(){
-    return this.http.get<Distributor[]>(this.baseUrl)
+    return this.http.get<Issuer[]>(this.baseUrl)
     .pipe(
       map(response => {
-        const distributors: Distributor[] = [];
+        const distributors: Issuer[] = [];
         for(const data in response){
           distributors.push(response[data]);
         }
@@ -39,17 +39,17 @@ export class DistributorService {
   }
 
   getDistributor(id: string){
-    return this.http.get<Distributor>(`${this.baseUrl}/${id}`)
+    return this.http.get<Issuer>(`${this.baseUrl}/${id}`)
     .pipe(
       map(distributorData => {
-        return distributorData as Distributor;
+        return distributorData as Issuer;
       })
     );
   }
 
-  addDistributor(model: Distributor){
+  addDistributor(model: Issuer){
     let generatedId: string;
-    return this.http.post<Distributor>(this.baseUrl, model)
+    return this.http.post<Issuer>(this.baseUrl, model)
     .pipe(
       switchMap(distributorData => {
         generatedId = distributorData.id;
@@ -64,7 +64,7 @@ export class DistributorService {
   }
 
   deleteDistributor(id: string){
-    return this.http.delete<Distributor>(`${this.baseUrl}/${id}`)
+    return this.http.delete<Issuer>(`${this.baseUrl}/${id}`)
     .pipe(
       switchMap(() => {
         return this.distributors;
@@ -77,7 +77,7 @@ export class DistributorService {
   }
 
   updateDistributor(id: string, name: string, email: string, phone: string, status: boolean) {
-    let updatedDistributor: Distributor[];
+    let updatedDistributor: Issuer[];
     return this.distributors.pipe(
       take(1),
       switchMap(distributors => {
@@ -97,7 +97,7 @@ export class DistributorService {
           email: email,
           phone: phone,
           status: status,
-        } as Distributor;
+        } as Issuer;
         
         return this.http.put(
           `${this.baseUrl}`,

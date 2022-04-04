@@ -41,7 +41,7 @@ public class Issuer extends GSecEntity {
 
     @JsonIgnore
     @OneToMany(targetEntity = Transaction.class, mappedBy = "issuer")
-    private List<Transaction> securities;
+    private List<Transaction> transactions;
 
     public Issuer(String name, String email, String phone, Boolean status, Address address) {
         super();

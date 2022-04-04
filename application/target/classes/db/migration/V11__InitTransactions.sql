@@ -14,7 +14,7 @@ CREATE TABLE transactions(
  reference_yield DECIMAL (16,2),
  portfolio_id BIGINT,
  category_id BIGINT,
- distributor_id BIGINT,
+ issuer_id BIGINT,
  inserted DATETIME,
  last_modified DATETIME,
  visible BIT,
@@ -22,6 +22,6 @@ CREATE TABLE transactions(
      FOREIGN KEY (portfolio_id) REFERENCES portfolios (id),
  CONSTRAINT fk_transactions_category
      FOREIGN KEY (category_id) REFERENCES security_categories (id),
- CONSTRAINT fk_transactions_distributor
-     FOREIGN KEY (distributor_id) REFERENCES distributors (id)
+ CONSTRAINT fk_transactions_issuer
+     FOREIGN KEY (issuer_id) REFERENCES issuers (id)
 );

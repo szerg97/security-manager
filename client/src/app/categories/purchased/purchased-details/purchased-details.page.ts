@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController, ModalController, NavController } from '@ionic/angular';
-import { Security } from 'src/app/_models/security';
+import { Transaction } from 'src/app/_models/transaction';
 import { SecurityService } from 'src/app/_services/security.service';
 import { ModalPageComponent } from './modal-page/modal-page.component';
 
@@ -12,7 +12,7 @@ import { ModalPageComponent } from './modal-page/modal-page.component';
 })
 export class PurchasedDetailsPage implements OnInit {
 
-  security: Security;
+  security: Transaction;
 
   isGeneral = false;
   isInterests = false;

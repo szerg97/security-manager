@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IonItemSliding, LoadingController, MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Distributor } from '../_models/distributor';
+import { Issuer } from '../_models/issuer';
 import { AuthService } from '../_services/auth.service';
 import { DistributorService } from '../_services/distributor.service';
 
@@ -12,7 +12,7 @@ import { DistributorService } from '../_services/distributor.service';
 })
 export class DistributorsPage implements OnInit, OnDestroy {
 
-  loadedDistributors: Distributor[];
+  loadedDistributors: Issuer[];
   isLoading = false;
   private distributorsSub: Subscription;
   isAdmin: boolean;
