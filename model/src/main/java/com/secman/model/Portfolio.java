@@ -14,20 +14,20 @@ import java.util.List;
 @NoArgsConstructor
 public class Portfolio extends GSecEntity{
 
-    private Double money;
+    private Double balance;
     @OneToOne(targetEntity = Customer.class)
     private Customer customer;
 
     @OneToMany(targetEntity = Transaction.class, mappedBy = "portfolio")
     private List<Transaction> securities;
 
-    public Portfolio(Double money, Customer customer) {
-        this.money = money;
+    public Portfolio(Double balance, Customer customer) {
+        this.balance = balance;
         this.customer = customer;
     }
 
     public void copyFrom(Portfolio portfolio) {
-        this.money = portfolio.getMoney();
+        this.balance = portfolio.getBalance();
         this.customer = portfolio.getCustomer();
     }
 }

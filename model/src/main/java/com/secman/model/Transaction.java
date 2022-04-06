@@ -23,12 +23,12 @@ public class Transaction extends GSecEntity {
     @Schema(description = "Exchange rate of security")
     @NotBlank(message = "error.security.exchange-rate.not-blank")
     private Double exchangeRate;
-    @Schema(description = "Face value of security")
-    @NotBlank(message = "error.security.face-value.not-blank")
-    private Double faceValue;
     @Schema(description = "Denomination of security")
     @NotBlank(message = "error.security.denomination.not-blank")
     private Double denomination;
+    @Schema(description = "Face value of security")
+    @NotBlank(message = "error.security.face-value.not-blank")
+    private Double faceValue;
     @Schema(description = "Gross value of security")
     @NotBlank(message = "error.security.gross-value.not-blank")
     private Double grossValue;
@@ -69,20 +69,20 @@ public class Transaction extends GSecEntity {
     @ManyToOne(targetEntity = Portfolio.class)
     private Portfolio portfolio;
 
-    public Transaction(Currency currency, Double exchangeRate, Double faceValue, Double denomination, Double grossValue, Double netValue, Double term, Double interest, Double accruedInterest, Boolean fixedInterest, Double yield, Double referenceYield, SecurityCategory category, Issuer issuer, Portfolio portfolio) {
+    public Transaction(Currency currency, Double exchangeRate, Double faceValue, Double denomination, Double term, Double interest, Double accruedInterest, Boolean fixedInterest, SecurityCategory category, Issuer issuer, Portfolio portfolio) {
         super();
         this.currency = currency;
         this.exchangeRate = exchangeRate;
         this.faceValue = faceValue;
         this.denomination = denomination;
-        this.grossValue = grossValue;
-        this.netValue = netValue;
         this.term = term;
         this.interest = interest;
         this.accruedInterest = accruedInterest;
         this.fixedInterest = fixedInterest;
-        this.yield = yield;
-        this.referenceYield = referenceYield;
+        this.netValue = this.denomination * this.exchangeRate;
+        this.grossValue = this.netValue  + (this.netValue * this.interest) * this.term;
+        this.yield = this.grossValue - this.netValue;
+        this.referenceYield = this.yield;
         this.category = category;
         this.issuer = issuer;
         this.portfolio = portfolio;

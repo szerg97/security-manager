@@ -1,5 +1,6 @@
-export interface Issuer{
-    id?: string;
+import { Gsec } from "./gsec";
+
+export interface Issuer extends Gsec{
     name: string;
     email: string;
     phone: string;

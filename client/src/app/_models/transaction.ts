@@ -1,5 +1,8 @@
-export interface Transaction{
-    id?: string;
+import { Gsec } from "./gsec";
+
+export interface Transaction extends Gsec{
+    currency: string;
+    exchangeRate: string;
     faceValue: string;
     denomination: string;
     grossValue: string;
@@ -10,7 +13,6 @@ export interface Transaction{
     fixedInterest: boolean;
     yield: string;
     referenceYield: string;
-    purchased: Date;
     porfolioId: string;
     issuerId: string;
     categoryId: string;

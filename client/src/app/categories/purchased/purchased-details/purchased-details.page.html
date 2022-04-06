@@ -13,24 +13,28 @@
       <h1>General</h1>
     </ion-card-header>
     <ion-card-content>
-      <ion-list inset="true">
+      <ion-list lines="none">
         <ion-accordion-group>
           <ion-accordion value="val">
             <ion-item slot="header">
               <ion-label>Value</ion-label>
             </ion-item>
-            <ion-list slot="content">
+            <ion-list slot="content" lines="none">
               <ion-item>
-                <ion-label>{{security.faceValue}} face</ion-label>
+                <ion-label>Denomination</ion-label>
+                <ion-label>{{security.denomination}}</ion-label>
               </ion-item>
               <ion-item>
-                <ion-label>{{security.denomination}} denomination</ion-label>
+                <ion-label>Face value</ion-label>
+                <ion-label>{{security.faceValue}}</ion-label>
               </ion-item>
               <ion-item>
-                <ion-label>{{security.grossValue}} gross</ion-label>
+                <ion-label>Net value</ion-label>
+                <ion-label>{{security.netValue}}</ion-label>
               </ion-item>
               <ion-item>
-                <ion-label>{{security.netValue}} net</ion-label>
+                <ion-label>Gross value</ion-label>
+                <ion-label>{{security.grossValue}}</ion-label>
               </ion-item>
             </ion-list>
           </ion-accordion>
@@ -38,7 +42,7 @@
             <ion-item slot="header">
               <ion-label>Category</ion-label>
             </ion-item>
-            <ion-list slot="content">
+            <ion-list slot="content" lines="none">
               <ion-item>
                 <ion-label>{{security.categoryId}}</ion-label>
               </ion-item>
@@ -48,12 +52,14 @@
             <ion-item slot="header">
               <ion-label>Stamp</ion-label>
             </ion-item>
-            <ion-list slot="content">
+            <ion-list slot="content" lines="none">
               <ion-item>
+                <ion-label>Term</ion-label>
                 <ion-label>{{security.term}} years</ion-label>
               </ion-item>
               <ion-item>
-                <ion-label>{{security.purchased}} purchased</ion-label>
+                <ion-label>Purchased</ion-label>
+                <ion-label>{{security.inserted[0]}}-{{security.inserted[1]}}-{{security.inserted[2]}}</ion-label>
               </ion-item>
             </ion-list>
           </ion-accordion>
@@ -66,13 +72,13 @@
       <h1>Interest</h1>
     </ion-card-header>
     <ion-card-content>
-      <ion-list inset="true">
+      <ion-list lines="none">
         <ion-accordion-group>
           <ion-accordion value="simple">
             <ion-item slot="header">
               <ion-label>Simple</ion-label>
             </ion-item>
-            <ion-list slot="content">
+            <ion-list slot="content" lines="none">
               <ion-item>
                 <ion-label>{{security.interest}}</ion-label>
               </ion-item>
@@ -82,7 +88,7 @@
             <ion-item slot="header">
               <ion-label>Accrued</ion-label>
             </ion-item>
-            <ion-list slot="content">
+            <ion-list slot="content" lines="none">
               <ion-item>
                 <ion-label>{{security.accruedInterest}}</ion-label>
               </ion-item>
@@ -92,7 +98,7 @@
             <ion-item slot="header">
               <ion-label>Fixed</ion-label>
             </ion-item>
-            <ion-list slot="content">
+            <ion-list slot="content" lines="none">
               <ion-item>
                 <ion-label>{{security.fixedInterest}}</ion-label>
               </ion-item>
@@ -107,15 +113,15 @@
       <h1>Yield</h1>
     </ion-card-header>
     <ion-card-content>
-      <ion-list inset="true">
+      <ion-list lines="none">
         <ion-accordion-group>
           <ion-accordion value="yield">
             <ion-item slot="header">
               <ion-label>Simple</ion-label>
             </ion-item>
-            <ion-list slot="content">
+            <ion-list slot="content" lines="none">
               <ion-item>
-                <ion-label>{{security.yield}}</ion-label>
+                <ion-label>{{security.yield}} {{security.currency}}</ion-label>
               </ion-item>
             </ion-list>
           </ion-accordion>
@@ -123,9 +129,9 @@
             <ion-item slot="header">
               <ion-label>Reference</ion-label>
             </ion-item>
-            <ion-list slot="content">
+            <ion-list slot="content" lines="none">
               <ion-item>
-                <ion-label>{{security.referenceYield}}</ion-label>
+                <ion-label>{{security.referenceYield}} {{security.currency}}</ion-label>
               </ion-item>
             </ion-list>
           </ion-accordion>

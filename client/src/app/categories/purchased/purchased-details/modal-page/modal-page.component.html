@@ -19,7 +19,7 @@
             <ion-item>Gross value: {{ security.grossValue }}</ion-item>
             <ion-item>Net value: {{ security.netValue }}</ion-item>
             <ion-item>Term: {{ security.term }}</ion-item>
-            <ion-item>Purchased: {{ security.purchased }}</ion-item>
+            <ion-item>Purchased: {{ security.inserted | date}}</ion-item>
         </ion-list>
         <ion-list *ngIf="isInterests">
             <ion-item>Interest: {{ security.interest }}</ion-item>

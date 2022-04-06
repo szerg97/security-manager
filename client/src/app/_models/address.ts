@@ -1,5 +1,6 @@
-export interface Address{
-    id?: string;
+import { Gsec } from "./gsec";
+
+export interface Address extends Gsec{
     addressLineOne: string;
     addressLineTwo: string;
     cityId: string;

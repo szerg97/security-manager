@@ -1,5 +1,6 @@
-export interface Customer{
-    id?: string;
+import { Gsec } from "./gsec";
+
+export interface Customer extends Gsec{
     firstName: string;
     lastName: string;
     email: string;
