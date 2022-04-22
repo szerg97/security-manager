@@ -16,9 +16,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class Transaction extends GSecEntity {
 
-    @Schema(description = "Exchange rate of transaction")
-    @NotBlank(message = "error.transaction.exchange-rate.not-blank")
-    private Double exchangeRate;
     @Schema(description = "Denomination of transaction")
     @NotBlank(message = "error.transaction.denomination.not-blank")
     private Double denomination;
@@ -28,12 +25,6 @@ public class Transaction extends GSecEntity {
     @Schema(description = "Net value of transaction")
     @NotBlank(message = "error.transaction.net-value.not-blank")
     private Double netValue;
-    @Schema(description = "Term of transaction")
-    @NotBlank(message = "error.transaction.term.not-blank")
-    private Double term;
-    @Schema(description = "Accrued interest of transaction")
-    @NotBlank(message = "error.transaction.accrued-interest.not-blank")
-    private Double accruedInterest;
     @Schema(description = "Yield of transaction")
     @NotBlank(message = "error.transaction.yield.not-blank")
     private Double yield;
@@ -56,17 +47,14 @@ public class Transaction extends GSecEntity {
     @ManyToOne(targetEntity = Portfolio.class)
     private Portfolio portfolio;
 
-    public Transaction(Security security, Issuer issuer, Portfolio portfolio, Double accruedInterest, Double denomination, Double term) {
+    public Transaction(Security security, Issuer issuer, Portfolio portfolio, Double denomination) {
         super();
         this.security = security;
         this.issuer = issuer;
         this.portfolio = portfolio;
-        this.accruedInterest = accruedInterest;
-        this.exchangeRate = this.accruedInterest + 1;
         this.denomination = denomination;
-        this.term = term;
-        this.netValue = this.denomination * this.exchangeRate;
-        this.grossValue = this.netValue  + (this.netValue * this.security.getInterest() * this.term);
+        this.netValue = this.denomination * this.security.getExchangeRate();
+        this.grossValue = this.netValue  + (this.netValue * this.security.getInterest() * this.security.getTerm());
         this.yield = this.grossValue - this.netValue;
         this.referenceYield = this.yield;
     }
@@ -75,10 +63,8 @@ public class Transaction extends GSecEntity {
         this.denomination = transaction.getDenomination();
         this.grossValue = transaction.getGrossValue();
         this.netValue = transaction.getNetValue();
-        this.term = transaction.getTerm();
         this.yield = transaction.getYield();
         this.referenceYield = transaction.getReferenceYield();
-        this.accruedInterest = transaction.getAccruedInterest();
         this.security = transaction.getSecurity();
         this.issuer = transaction.getIssuer();
         this.portfolio = transaction.getPortfolio();

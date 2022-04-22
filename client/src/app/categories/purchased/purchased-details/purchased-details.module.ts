@@ -6,7 +6,6 @@ import { IonicModule } from '@ionic/angular';
 import { PurchasedDetailsPageRoutingModule } from './purchased-details-routing.module';
 
 import { PurchasedDetailsPage } from './purchased-details.page';
-import { ModalPageComponent } from './modal-page/modal-page.component';
 
 @NgModule({
   imports: [
@@ -15,6 +14,6 @@ import { ModalPageComponent } from './modal-page/modal-page.component';
     IonicModule,
     PurchasedDetailsPageRoutingModule
   ],
-  declarations: [PurchasedDetailsPage, ModalPageComponent]
+  declarations: [PurchasedDetailsPage]
 })
 export class PurchasedDetailsPageModule {}

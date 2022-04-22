@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController, ModalController, NavController } from '@ionic/angular';
+import { Security } from 'src/app/_models/security';
 import { Transaction } from 'src/app/_models/transaction';
+import { SecurityService } from 'src/app/_services/security.service';
 import { TransactionService } from 'src/app/_services/transaction.service';
-import { ModalPageComponent } from './modal-page/modal-page.component';
 
 @Component({
   selector: 'app-purchased-details',
@@ -12,14 +13,12 @@ import { ModalPageComponent } from './modal-page/modal-page.component';
 })
 export class PurchasedDetailsPage implements OnInit {
 
-  security: Transaction;
-
-  isGeneral = false;
-  isInterests = false;
-  isYields = false;
+  transaction: Transaction;
+  security: Security;
 
   constructor(
-    private service: TransactionService,
+    private transactionService: TransactionService,
+    private securityService: SecurityService,
     private activatedRoute: ActivatedRoute,
     public modalController: ModalController
     ) {
@@ -30,52 +29,27 @@ export class PurchasedDetailsPage implements OnInit {
       if(!paramMap.has('id')){
         return;
       }
-      const securityId = paramMap.get('id');
-      this.getSecuity(securityId);
+      const id = paramMap.get('id');
+      this.getTransaction(id);
     });
   }
 
-  getSecuity(id: string){
-    this.service.getTransaction(id).subscribe(response => {
+  getTransaction(id: string){
+    this.transactionService.getTransaction(id).subscribe(response => {
+      this.transaction = response;
+      console.log(response);
+      this.getSecurity(this.transaction.securityId);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getSecurity(id: string){
+    this.securityService.getSecurity(id).subscribe(response => {
       this.security = response;
       console.log(response);
     }, error => {
       console.log(error);
     });
   }
-
-  async onGeneral(){
-    this.isInterests = false;
-    this.isYields = false;
-    this.isGeneral = true;
-    return await this.presentModal();
-  }
-
-  async onInterests(){
-    this.isInterests = true;
-    this.isYields = false;
-    this.isGeneral = false;
-    return await this.presentModal();
-  }
-
-  async onYields(){
-    this.isInterests = false;
-    this.isYields = true;
-    this.isGeneral = false;
-    return await this.presentModal();
-  }
-
-  async presentModal() {
-    const modal = this.modalController.create({
-      component: ModalPageComponent,
-      componentProps: {
-        'isGeneral': this.isGeneral,
-        'isInterests': this.isInterests,
-        'isYields': this.isYields,
-        'security': this.security
-      }
-    });
-    return (await modal).present();
-  }
-
 }

@@ -8,23 +8,22 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-   <ion-grid *ngIf="!isLoading && (!loadedSecurities || loadedSecurities.length <= 0)">
+   <ion-grid *ngIf="!isLoading && (!loadedTransactions || loadedTransactions.length <= 0)">
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
         <p>You haven't purchased any securities yet!</p>
       </ion-col>
     </ion-row>
    </ion-grid>
-   <ion-grid *ngIf="!isLoading && loadedSecurities.length > 0">
+   <ion-grid *ngIf="!isLoading && loadedTransactions.length > 0">
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
         <ion-list
-          *ngIf="(loadedSecurities)">
-          <ion-item *ngFor="let security of loadedSecurities" [routerLink]="['/', 'categories', 'purchased', security.id]" detail>
+          *ngIf="(loadedTransactions)">
+          <ion-item *ngFor="let transaction of loadedTransactions" [routerLink]="['/', 'categories', 'purchased', transaction.id]" detail>
             <ion-label>
-              <p>{{ security.id }}<p>
-              <p>{{ security.faceValue }}</p>
-              <p>{{ security.denomination }}</p>
+              <p>{{ transaction.id }}<p>
+              <p>{{ transaction.denomination }}</p>
             </ion-label>
           </ion-item>
         </ion-list>

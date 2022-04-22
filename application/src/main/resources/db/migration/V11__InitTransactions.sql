@@ -1,11 +1,8 @@
 CREATE TABLE transactions(
  id BIGINT PRIMARY KEY AUTO_INCREMENT,
- accrued_interest DECIMAL (2,2),
- exchange_rate DECIMAL(8, 2),
  denomination DECIMAL (16,2),
  gross_value DECIMAL (16,2),
  net_value DECIMAL (16,2),
- term DECIMAL (16,2),
  yield DECIMAL (16,2),
  reference_yield DECIMAL (16,2),
  portfolio_id BIGINT,

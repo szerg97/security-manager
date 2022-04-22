@@ -6,6 +6,8 @@ export interface Security extends Gsec{
   currency: string;
   exchangeRate: string;
   faceValue: string;
+  accruedInterest: string;
   interest: string;
   fixedInterest: boolean;
+  term: string;
 }

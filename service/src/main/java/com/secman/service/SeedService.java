@@ -203,7 +203,9 @@ public class SeedService {
                 Currency.getInstance("HUF"),
                 1000.0,
                 0.2,
-                true
+                0.01,
+                true,
+                1.0
         );
         Security c2 = new Security(
                 "Magyar Állampapír Plusz",
@@ -211,7 +213,9 @@ public class SeedService {
                 Currency.getInstance("HUF"),
                 5000.0,
                 0.3,
-                true
+                0.02,
+                true,
+                2.0
         );
         Security c3 = new Security(
                 "Prémium Babakötvény",
@@ -219,7 +223,9 @@ public class SeedService {
                 Currency.getInstance("HUF"),
                 10000.0,
                 0.7,
-                true
+                0.03,
+                false,
+                5.0
         );
         categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
     }
@@ -231,25 +237,19 @@ public class SeedService {
                 categoryRepository.findById(1L).get(),
                 issuerRepository.findById(1L).get(),
                 portfolioRepository.findById(1L).get(),
-                0.15,
-                55000.0,
-                5.0
+                55000.0
         );
         Transaction c2 = new Transaction(
                 categoryRepository.findById(2L).get(),
                 issuerRepository.findById(2L).get(),
                 portfolioRepository.findById(2L).get(),
-                0.27,
-                35000.0,
-                1.0
+                35000.0
         );
         Transaction c3 = new Transaction(
                 categoryRepository.findById(3L).get(),
                 issuerRepository.findById(3L).get(),
                 portfolioRepository.findById(3L).get(),
-                0.34,
-                75000.0,
-                3.0
+                75000.0
         );
         transactionRepository.saveAll(Arrays.asList(c1, c2, c3));
     }

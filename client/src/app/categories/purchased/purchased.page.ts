@@ -12,26 +12,26 @@ import { TransactionService } from 'src/app/_services/transaction.service';
 })
 export class PurchasedPage implements OnInit {
 
-  loadedSecurities: Transaction[];
+  loadedTransactions: Transaction[];
   isLoading = false;
-  private securitiesSub: Subscription;
+  private transactionsSub: Subscription;
 
   constructor(
-    private securityService: TransactionService,
+    private transactionService: TransactionService,
     private menuCtrl: MenuController,
     private loadingCtrl: LoadingController
     ) { }
 
     ngOnInit() {
-      this.securitiesSub = this.securityService.securities.subscribe(sec => {
-        this.loadedSecurities = sec;
+      this.transactionsSub = this.transactionService.securities.subscribe(sec => {
+        this.loadedTransactions = sec;
         this.menuCtrl.enable(true);
       })
     }
   
     ionViewWillEnter() {
       this.isLoading = true;
-      this.securityService.fetchTransactionsByCustomer().subscribe(() => {
+      this.transactionService.fetchTransactionsByCustomer().subscribe(() => {
         this.isLoading = false;
       });
     }
@@ -41,8 +41,8 @@ export class PurchasedPage implements OnInit {
     }
   
     ngOnDestroy() {
-      if (this.securitiesSub) {
-        this.securitiesSub.unsubscribe();
+      if (this.transactionsSub) {
+        this.transactionsSub.unsubscribe();
       }
     }
 

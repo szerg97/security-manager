@@ -42,7 +42,7 @@ export class CategoryDetailsPage implements OnInit {
   getCategory(id: string){
     this.service.getSecurity(id).subscribe(response => {
       this.category = response;
-      console.log(response);
+      console.log(this.category);
     }, error => {
       console.log(error);
     });
@@ -59,7 +59,8 @@ export class CategoryDetailsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       const denomination = form.value.denomination;
-      const model = {denomination}
+      const securityId = this.category.id;
+      const model = {denomination, securityId}
       console.log(model);
 
       this.transactionService

@@ -1,5 +1,7 @@
 package com.secman.application.controller;
 
+import com.secman.application.dto.TransactionDto;
+import com.secman.application.dto.TransactionMapper;
 import com.secman.model.Portfolio;
 import com.secman.model.Transaction;
 import com.secman.service.PortfolioService;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,8 +35,10 @@ import java.util.List;
 @Validated
 public class TransactionController {
 
+    private final TransactionMapper transactionMapper;
     private final TransactionService transactionService;
     private final PortfolioService portfolioService;
+
     @Autowired
     private HttpServletRequest request;
 
@@ -91,9 +96,12 @@ public class TransactionController {
             }
     )
     @GetMapping(path = "/self", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Transaction>> getTransactionsByCustomer(){
+    public ResponseEntity<List<TransactionDto>> getTransactionsByCustomer(){
         Portfolio portfolio = this.portfolioService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername());
-        return ResponseEntity.ok(this.transactionService.getByPortfolio(portfolio));
+        List<Transaction> transactions = this.transactionService.getByPortfolio(portfolio);
+        List<TransactionDto> dtos = new ArrayList<>();
+        transactions.forEach(t -> dtos.add(transactionMapper.fromEntity(t)));
+        return ResponseEntity.ok(dtos);
     }
 
     @ApiResponses(value = {
@@ -121,10 +129,11 @@ public class TransactionController {
             }
     )
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Transaction> getOneTransaction(
+    public ResponseEntity<TransactionDto> getOneTransaction(
             @Parameter(name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
-        return ResponseEntity.ok(this.transactionService.getOne(id));
+        TransactionDto dto = transactionMapper.fromEntity(this.transactionService.getOne(id));
+        return ResponseEntity.ok(dto);
     }
 
     @ApiResponses(value = {
@@ -183,10 +192,11 @@ public class TransactionController {
     @PostMapping("")
     public ResponseEntity<Transaction> addOneTransaction(
             @Valid
-            @Parameter (name = "transaction", required = true)
-            @RequestBody (required = true) Transaction transaction){
+            @Parameter (name = "dto", required = true)
+            @RequestBody (required = true) TransactionDto dto){
         Portfolio portfolio = this.portfolioService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername());
-        transaction.setPortfolio(portfolio);
+        Transaction transaction = transactionMapper.toEntity(dto, portfolio);
+//        transaction.setPortfolio(portfolio);
         return ResponseEntity.ok(this.transactionService.addOne(transaction));
     }
 

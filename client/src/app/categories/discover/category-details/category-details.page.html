@@ -28,7 +28,7 @@
        <ion-col sizeSm="6" offsetSm="3">
          <ion-item>
           <ion-label>Denomination</ion-label>
-          <ion-range min="0" max="10000" pin color="secondary"
+          <ion-range min="0" max="10000" step="{{category.faceValue}}" pin color="secondary"
           name="denomination"
           ngModel
           required
