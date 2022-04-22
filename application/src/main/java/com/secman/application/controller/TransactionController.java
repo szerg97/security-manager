@@ -183,9 +183,11 @@ public class TransactionController {
     @PostMapping("")
     public ResponseEntity<Transaction> addOneTransaction(
             @Valid
-            @Parameter (name = "security", required = true)
+            @Parameter (name = "transaction", required = true)
             @RequestBody (required = true) Transaction transaction){
-        return ResponseEntity.created(URI.create("/securities/{id}")).body(this.transactionService.addOne(transaction));
+        Portfolio portfolio = this.portfolioService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername());
+        transaction.setPortfolio(portfolio);
+        return ResponseEntity.ok(this.transactionService.addOne(transaction));
     }
 
     @ApiResponses(value = {
@@ -213,7 +215,7 @@ public class TransactionController {
     )
     @PutMapping("")
     public ResponseEntity<Transaction> updateOneTransaction(
-            @Parameter (name = "security", required = true)
+            @Parameter (name = "transaction", required = true)
             @RequestBody (required = true) Transaction transaction){
         return ResponseEntity.ok(this.transactionService.updateOne(transaction));
     }

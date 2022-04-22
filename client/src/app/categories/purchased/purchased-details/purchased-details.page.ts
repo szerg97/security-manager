@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController, ModalController, NavController } from '@ionic/angular';
 import { Transaction } from 'src/app/_models/transaction';
-import { SecurityService } from 'src/app/_services/security.service';
+import { TransactionService } from 'src/app/_services/transaction.service';
 import { ModalPageComponent } from './modal-page/modal-page.component';
 
 @Component({
@@ -19,7 +19,7 @@ export class PurchasedDetailsPage implements OnInit {
   isYields = false;
 
   constructor(
-    private service: SecurityService,
+    private service: TransactionService,
     private activatedRoute: ActivatedRoute,
     public modalController: ModalController
     ) {
@@ -36,7 +36,7 @@ export class PurchasedDetailsPage implements OnInit {
   }
 
   getSecuity(id: string){
-    this.service.getSecurity(id).subscribe(response => {
+    this.service.getTransaction(id).subscribe(response => {
       this.security = response;
       console.log(response);
     }, error => {

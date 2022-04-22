@@ -3,7 +3,7 @@ import { LoadingController, MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Transaction } from 'src/app/_models/transaction';
 import { AuthService } from 'src/app/_services/auth.service';
-import { SecurityService } from 'src/app/_services/security.service';
+import { TransactionService } from 'src/app/_services/transaction.service';
 
 @Component({
   selector: 'app-purchased',
@@ -17,7 +17,7 @@ export class PurchasedPage implements OnInit {
   private securitiesSub: Subscription;
 
   constructor(
-    private securityService: SecurityService,
+    private securityService: TransactionService,
     private menuCtrl: MenuController,
     private loadingCtrl: LoadingController
     ) { }
@@ -31,7 +31,7 @@ export class PurchasedPage implements OnInit {
   
     ionViewWillEnter() {
       this.isLoading = true;
-      this.securityService.fetchSecuritiesByCustomer().subscribe(() => {
+      this.securityService.fetchTransactionsByCustomer().subscribe(() => {
         this.isLoading = false;
       });
     }

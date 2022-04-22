@@ -1,7 +1,7 @@
 package com.secman.service;
 
-import com.secman.model.SecurityCategory;
-import com.secman.repository.SecurityCategoryRepository;
+import com.secman.model.Security;
+import com.secman.repository.SecurityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,28 +10,28 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class SecurityCategoryService {
+public class SecurityService {
 
-    private final SecurityCategoryRepository categoryRepository;
+    private final SecurityRepository categoryRepository;
 
-    public List<SecurityCategory> getAll(){
+    public List<Security> getAll(){
         return this.categoryRepository.findAll();
     }
 
-    public SecurityCategory getOne(Long id){
-        Optional<SecurityCategory> optional = this.categoryRepository.findById(id);
+    public Security getOne(Long id){
+        Optional<Security> optional = this.categoryRepository.findById(id);
         if (optional.isPresent())
             return optional.get();
         throw new RuntimeException("Could not found");
     }
 
-    public SecurityCategory addOne(SecurityCategory category){
+    public Security addOne(Security category){
         this.categoryRepository.save(category);
         return category;
     }
 
-    public SecurityCategory deleteOneById(Long id){
-        SecurityCategory category = getOne(id);
+    public Security deleteOneById(Long id){
+        Security category = getOne(id);
         if (category != null){
             this.categoryRepository.delete(category);
             return category;
@@ -40,8 +40,8 @@ public class SecurityCategoryService {
             throw new RuntimeException("Could not delete");
     }
 
-    public SecurityCategory updateOne(SecurityCategory pCategory){
-        SecurityCategory category = getOne(pCategory.getId());
+    public Security updateOne(Security pCategory){
+        Security category = getOne(pCategory.getId());
         if (category != null) {
             category.copyFrom(pCategory);
             this.categoryRepository.save(category);

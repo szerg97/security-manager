@@ -3,7 +3,7 @@ package com.secman.service;
 import com.secman.model.Issuer;
 import com.secman.model.Portfolio;
 import com.secman.model.Transaction;
-import com.secman.model.SecurityCategory;
+import com.secman.model.Security;
 import com.secman.repository.TransactionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,8 +29,8 @@ public class TransactionService {
         return this.transactionRepository.findByIssuer(issuer);
     }
 
-    public List<Transaction> getByCategory(SecurityCategory category){
-        return this.transactionRepository.findByCategory(category);
+    public List<Transaction> getBySecurity(Security category){
+        return this.transactionRepository.findBySecurity(category);
     }
 
     public Transaction getOne(Long id){

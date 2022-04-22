@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { Category } from 'src/app/_models/category';
-import { CategoryService } from 'src/app/_services/category.service';
+import { Security } from 'src/app/_models/security';
+import { SecurityService } from 'src/app/_services/security.service';
 
 @Component({
   selector: 'app-new-category',
@@ -13,7 +13,7 @@ import { CategoryService } from 'src/app/_services/category.service';
 export class NewCategoryPage implements OnInit {
 
   constructor(
-    public categoryService: CategoryService,
+    public categoryService: SecurityService,
     private router: Router,
     private loadingCtrl: LoadingController) { }
   ngOnInit() {
@@ -32,15 +32,19 @@ export class NewCategoryPage implements OnInit {
       loadingEl.present();
       const name = form.value.name;
       const description = form.value.description;
-      const model = {name: name, description: description}
+      const currency = form.value.currency;
+      const exchangeRate = form.value.exchangeRate;
+      const faceValue = form.value.faceValue;
+      const interest = form.value.interest;
+      const fixedInterest = form.value.fixedInterest;
+
+      const model = {name, description, currency, exchangeRate, faceValue,
+      interest, fixedInterest}
       console.log(model);
 
       this.categoryService
-        .addCategory(
-          {
-            name,
-            description
-          } as Category
+        .addSecurity(
+          model as Security
         )
         .subscribe(() => {
           loadingEl.dismiss();

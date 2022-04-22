@@ -1,77 +1,109 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Security } from '../_models/security';
 import { environment } from 'src/environments/environment';
-import { Customer } from '../_models/customer';
-import { Transaction } from '../_models/transaction';
+import { BehaviorSubject, Observable, of, pipe, throwError } from 'rxjs';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SecurityService {
 
-  baseUrl = `${environment.apiUrl}transactions`;
+  baseUrl = `${environment.apiUrl}securities`;
 
-  private _securities = new BehaviorSubject<Transaction[]>([]);
+  private _categories = new BehaviorSubject<Security[]>([]);
 
-  get securities() {
-    return this._securities.asObservable();
+  get categories() {
+    return this._categories.asObservable();
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  fetchSecuritiesByCustomer(){
-    return this.http.get<Transaction[]>(`${this.baseUrl}/self`)
+  fetchSecurities(){
+    return this.http.get<Security[]>(this.baseUrl)
     .pipe(
       map(response => {
-        const securities: Transaction[] = [];
+        const categories: Security[] = [];
         for(const data in response){
-          securities.push(response[data]);
+          categories.push(response[data]);
         }
-        console.log(securities);
-        return securities;
+        console.log(categories);
+        return categories;
       }),
-      tap(securities => {
-        this._securities.next(securities);
+      tap(categories => {
+        this._categories.next(categories);
       })
     );
   }
 
   getSecurity(id: string){
-    return this.http.get<Transaction>(`${this.baseUrl}/${id}`)
+    return this.http.get<Security>(`${this.baseUrl}/${id}`)
     .pipe(
-      map(secData => {
-        return secData as Transaction;
+      map(categoryData => {
+        return categoryData as Security;
       })
     );
   }
 
-  addSecurity(model: Transaction){
+  addSecurity(model: Security){
     let generatedId: string;
-    return this.http.post<Transaction>(this.baseUrl, model)
+    return this.http.post<Security>(this.baseUrl, model)
     .pipe(
-      switchMap(secData => {
-        generatedId = secData.id;
-        return this.securities;
+      switchMap(categoryData => {
+        generatedId = categoryData.id;
+        return this.categories;
       }),
       take(1),
-      tap(securities => {
+      tap(categories => {
         model.id = generatedId;
-        this._securities.next(securities.concat(model));
+        this._categories.next(categories.concat(model));
       })
     );
   }
 
   deleteSecurity(id: string){
-    return this.http.delete<Transaction>(`${this.baseUrl}/${id}`)
+    return this.http.delete<Security>(`${this.baseUrl}/${id}`)
     .pipe(
       switchMap(() => {
-        return this.securities;
+        return this.categories;
       }),
       take(1),
-      tap(securities => {
-        this._securities.next(securities.filter(b => b.id !== id));
+      tap(categories => {
+        this._categories.next(categories.filter(b => b.id !== id));
+      })
+    );
+  }
+
+  updateSecurity(id: string, name: string, description: string) {
+    let updatedCategories: Security[];
+    return this.categories.pipe(
+      take(1),
+      switchMap(categories => {
+        if (!categories || categories.length <= 0) {
+          return this.fetchSecurities();
+        } else {
+          return of(categories);
+        }
+      }),
+      switchMap(categories => {
+        const updatedCategoryIndex = categories.findIndex(cat => cat.id === id);
+        updatedCategories = [...categories];
+        const oldCategory = updatedCategories[updatedCategoryIndex];
+        updatedCategories[updatedCategoryIndex] = {
+          id: oldCategory.id,
+          name: name,
+          description: description,
+        } as Security;
+        
+        return this.http.put(
+          `${this.baseUrl}`,
+          { ...updatedCategories[updatedCategoryIndex]}
+        );
+      }),
+      tap(() => {
+        this._categories.next(updatedCategories);
       })
     );
   }

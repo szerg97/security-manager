@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IonItemSliding, LoadingController, MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Category } from 'src/app/_models/category';
+import { Security } from 'src/app/_models/security';
 import { AuthService } from 'src/app/_services/auth.service';
-import { CategoryService } from 'src/app/_services/category.service';
+import { SecurityService } from 'src/app/_services/security.service';
 
 @Component({
   selector: 'app-discover',
@@ -12,13 +12,13 @@ import { CategoryService } from 'src/app/_services/category.service';
 })
 export class DiscoverPage implements OnInit, OnDestroy {
 
-  loadedCategories: Category[];
+  loadedCategories: Security[];
   isLoading = false;
   private categoriesSub: Subscription;
   isAdmin: boolean;
 
   constructor(
-    public categoryService: CategoryService,
+    public categoryService: SecurityService,
     private menuCtrl: MenuController,
     private loadingCtrl: LoadingController,
     private authService: AuthService) 
@@ -36,7 +36,7 @@ export class DiscoverPage implements OnInit, OnDestroy {
     slidingEl.close();
     this.loadingCtrl.create({ message: 'Deleting...' }).then(loadingEl => {
       loadingEl.present();
-      this.categoryService.deleteCategory(id).subscribe(() => {
+      this.categoryService.deleteSecurity(id).subscribe(() => {
         loadingEl.dismiss();
       });
     });
@@ -44,7 +44,7 @@ export class DiscoverPage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.isLoading = true;
-    this.categoryService.fetchCategories().subscribe(() => {
+    this.categoryService.fetchSecurities().subscribe(() => {
       this.isLoading = false;
     });
   }

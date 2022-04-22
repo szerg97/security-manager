@@ -26,7 +26,7 @@
       <ion-row>
        <ion-col sizeSm="6" offsetSm="3">
          <ion-item>
-           <ion-label position="floating">Desription</ion-label>
+           <ion-label position="floating">Description</ion-label>
            <ion-textarea 
            rows="3"
            name="description"
@@ -36,6 +36,71 @@
          </ion-item>
        </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Currency</ion-label>
+            <ion-input 
+            type="text" 
+            name="currency"
+            ngModel
+            required
+            #currencyCtrl="ngModel"></ion-input>
+          </ion-item>
+        </ion-col>
+       </ion-row>
+       <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Exhcange rate</ion-label>
+            <ion-input 
+            type="text" 
+            name="exchangeRate"
+            ngModel
+            required
+            #exchangeRateCtrl="ngModel"></ion-input>
+          </ion-item>
+        </ion-col>
+       </ion-row>
+       <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Face value</ion-label>
+            <ion-input 
+            type="text" 
+            name="faceValue"
+            ngModel
+            required
+            #faceValueCtrl="ngModel"></ion-input>
+          </ion-item>
+        </ion-col>
+       </ion-row>
+       <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Interest</ion-label>
+            <ion-input 
+            type="text" 
+            name="interest"
+            ngModel
+            required
+            #interestCtrl="ngModel"></ion-input>
+          </ion-item>
+        </ion-col>
+       </ion-row>
+       <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Fixed</ion-label>
+            <ion-checkbox
+            name="fixed"
+            ngModel
+            required
+            #fixedCtrl="ngModel">
+          </ion-checkbox>
+          </ion-item>
+        </ion-col>
+       </ion-row>
       <ion-row>
         <ion-col sizeSm="6" offsetSm="3">
           <ion-button

@@ -21,7 +21,7 @@ public class SeedService {
     private final EmployeeRepository            employeeRepository;
     private final FeedbackRepository            feedbackRepository;
     private final MessageRepository             messageRepository;
-    private final SecurityCategoryRepository    categoryRepository;
+    private final SecurityRepository categoryRepository;
     private final TransactionRepository transactionRepository;
     private final PortfolioRepository portfolioRepository;
 
@@ -197,17 +197,29 @@ public class SeedService {
         if (!categoryRepository.findAll().isEmpty())
             return;
 
-        SecurityCategory c1 = new SecurityCategory(
+        Security c1 = new Security(
                 "Magyar Állampapír",
-                "A MAP egy olyan állampapír, amely..."
+                "A MAP egy olyan állampapír, amely...",
+                Currency.getInstance("HUF"),
+                1000.0,
+                0.2,
+                true
         );
-        SecurityCategory c2 = new SecurityCategory(
+        Security c2 = new Security(
                 "Magyar Állampapír Plusz",
-                "A MAP Plusz egy olyan állampapír, amely..."
+                "A MAP Plusz egy olyan állampapír, amely...",
+                Currency.getInstance("HUF"),
+                5000.0,
+                0.3,
+                true
         );
-        SecurityCategory c3 = new SecurityCategory(
+        Security c3 = new Security(
                 "Prémium Babakötvény",
-                "A Prémium Babakötvény egy olyan állampapír, amely..."
+                "A Prémium Babakötvény egy olyan állampapír, amely...",
+                Currency.getInstance("HUF"),
+                10000.0,
+                0.7,
+                true
         );
         categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
     }
@@ -216,43 +228,28 @@ public class SeedService {
             return;
 
         Transaction c1 = new Transaction(
-                Currency.getInstance("HUF"),
-                1.08,
-                1000.0,
-                55000.0,
-                5.0,
-                0.03,
-                0.0,
-                true,
                 categoryRepository.findById(1L).get(),
                 issuerRepository.findById(1L).get(),
-                portfolioRepository.findById(1L).get()
+                portfolioRepository.findById(1L).get(),
+                0.15,
+                55000.0,
+                5.0
         );
         Transaction c2 = new Transaction(
-                Currency.getInstance("HUF"),
-                1.02,
-                1.0,
-                35000.0,
-                1.0,
-                0.02,
-                0.0,
-                false,
                 categoryRepository.findById(2L).get(),
                 issuerRepository.findById(2L).get(),
-                portfolioRepository.findById(2L).get()
+                portfolioRepository.findById(2L).get(),
+                0.27,
+                35000.0,
+                1.0
         );
         Transaction c3 = new Transaction(
-                Currency.getInstance("HUF"),
-                1.15,
-                5000.0,
-                75000.0,
-                3.0,
-                0.08,
-                0.0,
-                true,
                 categoryRepository.findById(3L).get(),
                 issuerRepository.findById(3L).get(),
-                portfolioRepository.findById(3L).get()
+                portfolioRepository.findById(3L).get(),
+                0.34,
+                75000.0,
+                3.0
         );
         transactionRepository.saveAll(Arrays.asList(c1, c2, c3));
     }

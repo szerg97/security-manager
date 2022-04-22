@@ -3,8 +3,8 @@ import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Category } from 'src/app/_models/category';
-import { CategoryService } from 'src/app/_services/category.service';
+import { Security } from 'src/app/_models/security';
+import { SecurityService } from 'src/app/_services/security.service';
 
 @Component({
   selector: 'app-edit-category',
@@ -13,12 +13,12 @@ import { CategoryService } from 'src/app/_services/category.service';
 })
 export class EditCategoryPage implements OnInit, OnDestroy {
 
-  category: Category;
+  category: Security;
   isLoading = false;
   private categorySub: Subscription;
 
   constructor(
-    private categoryService: CategoryService,
+    private categoryService: SecurityService,
     private activatedRoute: ActivatedRoute,
     private loadingCtrl: LoadingController,
     private router: Router
@@ -35,7 +35,7 @@ export class EditCategoryPage implements OnInit, OnDestroy {
   }
 
   getCategory(id: string){
-    this.categoryService.getCategory(id).subscribe(response => {
+    this.categoryService.getSecurity(id).subscribe(response => {
       this.category = response;
       console.log(response);
     }, error => {
@@ -54,7 +54,7 @@ export class EditCategoryPage implements OnInit, OnDestroy {
       .then(loadingEl => {
         loadingEl.present();
         this.categoryService
-          .updateCategory(
+          .updateSecurity(
             this.category.id,
             form.value.name,
             form.value.description

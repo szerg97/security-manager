@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MenuController, NavController } from '@ionic/angular';
-import { Category } from 'src/app/_models/category';
+import { LoadingController, MenuController, NavController } from '@ionic/angular';
+import { Security } from 'src/app/_models/security';
+import { Transaction } from 'src/app/_models/transaction';
 import { AuthService } from 'src/app/_services/auth.service';
-import { CategoryService } from 'src/app/_services/category.service';
+import { SecurityService } from 'src/app/_services/security.service';
+import { TransactionService } from 'src/app/_services/transaction.service';
 
 @Component({
   selector: 'app-category-details',
@@ -12,15 +15,16 @@ import { CategoryService } from 'src/app/_services/category.service';
 })
 export class CategoryDetailsPage implements OnInit {
   
-  category: Category;
+  category: Security;
 
   isAdmin: boolean;
 
   constructor(
-    private service: CategoryService,
+    private service: SecurityService,
+    private transactionService: TransactionService,
     private navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
-    private menuCtrl: MenuController,
+    private loadingCtrl: LoadingController,
     private authServcie: AuthService) {
     }
 
@@ -36,7 +40,7 @@ export class CategoryDetailsPage implements OnInit {
   }
 
   getCategory(id: string){
-    this.service.getCategory(id).subscribe(response => {
+    this.service.getSecurity(id).subscribe(response => {
       this.category = response;
       console.log(response);
     }, error => {
@@ -44,7 +48,31 @@ export class CategoryDetailsPage implements OnInit {
     });
   }
 
-  onPurchase(){
-    this.navCtrl.navigateBack('/categories/discover');
+  onPurchase(form: NgForm){
+    if (!form.valid){
+      return;
+    }
+
+    this.loadingCtrl.create({
+      message: 'Transaction in progress...'
+    })
+    .then(loadingEl => {
+      loadingEl.present();
+      const denomination = form.value.denomination;
+      const model = {denomination}
+      console.log(model);
+
+      this.transactionService
+        .addTransaction(
+          model as Transaction
+        )
+        .subscribe(() => {
+          loadingEl.dismiss();
+          form.reset();
+          this.navCtrl.navigateBack('/categories/discover');
+        });
+    });
+
+    
   }
 }

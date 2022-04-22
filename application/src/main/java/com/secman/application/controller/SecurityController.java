@@ -1,7 +1,7 @@
 package com.secman.application.controller;
 
-import com.secman.model.SecurityCategory;
-import com.secman.service.SecurityCategoryService;
+import com.secman.model.Security;
+import com.secman.service.SecurityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -21,21 +21,21 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/security-categories")
+@RequestMapping(path = "/securities")
 @CrossOrigin("*")
 @AllArgsConstructor
 @Validated
-public class SecurityCategoryController {
+public class SecurityController {
 
-    private final SecurityCategoryService categoryService;
+    private final SecurityService securityService;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -46,7 +46,7 @@ public class SecurityCategoryController {
                     content = { @Content(mediaType = "application/json")}),
     })
     @Operation(
-            summary = "Query all categories",
+            summary = "Query all securities",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec", "customer"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec", "customer"}),
@@ -54,17 +54,17 @@ public class SecurityCategoryController {
             }
     )
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SecurityCategory>> getAllCategories(){
-        return ResponseEntity.ok(this.categoryService.getAll());
+    public ResponseEntity<List<Security>> getAllCategories(){
+        return ResponseEntity.ok(this.securityService.getAll());
     }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -75,7 +75,7 @@ public class SecurityCategoryController {
                     content = { @Content(mediaType = "application/json")}),
     })
     @Operation(
-            summary = "Query category",
+            summary = "Query security",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec", "customer"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec", "customer"}),
@@ -83,19 +83,19 @@ public class SecurityCategoryController {
             }
     )
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SecurityCategory> getOneCategory(
+    public ResponseEntity<Security> getOneCategory(
             @Parameter(name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
-        return ResponseEntity.ok(this.categoryService.getOne(id));
+        return ResponseEntity.ok(this.securityService.getOne(id));
     }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -105,7 +105,7 @@ public class SecurityCategoryController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = { @Content(mediaType = "application/json")}),
     })
-    @Operation(summary = "Deleting category",
+    @Operation(summary = "Deleting security",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec"}),
@@ -113,19 +113,19 @@ public class SecurityCategoryController {
             }
     )
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SecurityCategory> deleteOneCategory(
+    public ResponseEntity<Security> deleteOneCategory(
             @Parameter (name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
-        return ResponseEntity.ok(this.categoryService.deleteOneById(id));
+        return ResponseEntity.ok(this.securityService.deleteOneById(id));
     }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -135,7 +135,7 @@ public class SecurityCategoryController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = { @Content(mediaType = "application/json")}),
     })
-    @Operation(summary = "Adding category",
+    @Operation(summary = "Adding security",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec"}),
@@ -143,20 +143,20 @@ public class SecurityCategoryController {
             }
     )
     @PostMapping("")
-    public ResponseEntity<SecurityCategory> addOneCategory(
+    public ResponseEntity<Security> addOneCategory(
             @Valid
-            @Parameter (name = "category", required = true)
-            @RequestBody (required = true) SecurityCategory category){
-        return ResponseEntity.created(URI.create("/security-categories/{id}")).body(this.categoryService.addOne(category));
+            @Parameter (name = "security", required = true)
+            @RequestBody (required = true) Security category){
+        return ResponseEntity.created(URI.create("/security-categories/{id}")).body(this.securityService.addOne(category));
     }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "400", description = "Validation error",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SecurityCategory.class))) }),
+                            array = @ArraySchema(schema = @Schema(implementation = Security.class))) }),
             @ApiResponse(responseCode = "401", description = "Token expired",
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "You do not have permission",
@@ -166,7 +166,7 @@ public class SecurityCategoryController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = { @Content(mediaType = "application/json")}),
     })
-    @Operation(summary = "Editing category",
+    @Operation(summary = "Editing security",
             security = {
                     @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
                     @SecurityRequirement(name = "openid", scopes = {"gsec"}),
@@ -174,10 +174,10 @@ public class SecurityCategoryController {
             }
     )
     @PutMapping("")
-    public ResponseEntity<SecurityCategory> updateOneCategory(
-            @Parameter (name = "category", required = true)
-            @RequestBody (required = true) SecurityCategory category){
-        return ResponseEntity.ok(this.categoryService.updateOne(category));
+    public ResponseEntity<Security> updateOneCategory(
+            @Parameter (name = "security", required = true)
+            @RequestBody (required = true) Security category){
+        return ResponseEntity.ok(this.securityService.updateOne(category));
     }
 }
 
