@@ -20,8 +20,8 @@ public class MessageService {
         return this.messageRepository.findAll();
     }
 
-    public List<Message> getByCustomer(Customer customer){
-        return this.messageRepository.findByCustomer(customer);
+    public List<Message> getByCustomer(String email){
+        return this.messageRepository.findByCustomerEmail(email);
     }
 
     public List<Message> getByEmployee(Employee employee){

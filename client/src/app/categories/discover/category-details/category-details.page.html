@@ -13,28 +13,64 @@
 </ion-header>
 
 <ion-content *ngIf="category">
-  <ion-card>
-    <ion-card-header>
-      <h1>{{ category.name }}</h1>
-    </ion-card-header>
-    <ion-card-content>
-      <p>{{ category.id}}</p>
-      <p>{{ category.description}}</p>
-    </ion-card-content>
-  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-card>
+          <ion-card-header>
+            <h1>{{ category.name }}</h1>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{ category.id}}</p>
+            <p>{{ category.description}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-item>
+          <ion-row>
+            <ion-col>
+              <ion-label>Exchange rate</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>{{ exchangeRate * 100}}%</ion-label>
+            </ion-col>
+          </ion-row>
+       </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-item>
+          <ion-row>
+            <ion-col>
+              <ion-label>Face value</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>{{ category.faceValue}} HUF</ion-label>
+            </ion-col>
+          </ion-row>
+       </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
   <form id="f1" #f1="ngForm" (ngSubmit)="onPurchase(f1)">
     <ion-grid>
+      
       <ion-row>
        <ion-col sizeSm="6" offsetSm="3">
          <ion-item>
           <ion-label>Denomination</ion-label>
-          <ion-range min="0" max="10000" step="{{category.faceValue}}" pin color="secondary"
+          <ion-range id="range" (ngModelChange)="onChange()" min="0" max="100000" step="{{category.faceValue}}" pin snaps color="secondary"
           name="denomination"
           ngModel
           required
           #denominationCtrl="ngModel">
-            <ion-icon slot="start" size="small"></ion-icon>
-            <ion-icon slot="end"></ion-icon>
+            <ion-label slot="start">{{ denomVal }}</ion-label>
+            <ion-label slot="end">{{ denomVal * exchangeRate}}</ion-label>
           </ion-range>
         </ion-item>
        </ion-col>
@@ -46,7 +82,7 @@
           color="primary"
           expand="block"
           [disabled]="!f1.valid">
-          Purchase
+          Confirm
           </ion-button>
         </ion-col>
       </ion-row>

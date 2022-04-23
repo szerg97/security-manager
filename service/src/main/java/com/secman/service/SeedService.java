@@ -198,32 +198,32 @@ public class SeedService {
             return;
 
         Security c1 = new Security(
-                "Magyar Állampapír",
-                "A MAP egy olyan állampapír, amely...",
+                "Egyéves Magyar Állampapír 2023/I",
+                "Az 1MÁP egy olyan állampapír, amely...",
                 Currency.getInstance("HUF"),
                 1000.0,
-                0.2,
-                0.01,
+                0.0021,
+                0.0001,
                 true,
                 1.0
         );
         Security c2 = new Security(
                 "Magyar Állampapír Plusz",
-                "A MAP Plusz egy olyan állampapír, amely...",
+                "A MÁPP egy olyan állampapír, amely...",
                 Currency.getInstance("HUF"),
                 5000.0,
-                0.3,
-                0.02,
+                0.0033,
+                0.0001,
                 true,
                 2.0
         );
         Security c3 = new Security(
-                "Prémium Babakötvény",
-                "A Prémium Babakötvény egy olyan állampapír, amely...",
+                "Prémium Magyar Állampapír 2021/J",
+                "A PMÁP egy olyan állampapír, amely...",
                 Currency.getInstance("HUF"),
                 10000.0,
-                0.7,
-                0.03,
+                0.0075,
+                0.0001,
                 false,
                 5.0
         );

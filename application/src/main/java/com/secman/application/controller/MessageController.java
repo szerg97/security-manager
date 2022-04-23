@@ -11,11 +11,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
+import org.keycloak.KeycloakSecurityContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -28,6 +31,9 @@ import java.util.List;
 public class MessageController {
 
     private final MessageService messageService;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
@@ -56,6 +62,35 @@ public class MessageController {
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Message>> getAllMessages(){
         return ResponseEntity.ok(this.messageService.getAll());
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Request successful",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class))) }),
+            @ApiResponse(responseCode = "400", description = "Validation error",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class))) }),
+            @ApiResponse(responseCode = "401", description = "Token expired",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "403", description = "You do not have permission",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "302", description = "You are not logged in, redirecting",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = { @Content(mediaType = "application/json")}),
+    })
+    @Operation(
+            summary = "Query messages for user",
+            security = {
+                    @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
+                    @SecurityRequirement(name = "openid", scopes = {"gsec"}),
+                    @SecurityRequirement(name = "oauth2", scopes = {"gsec"})
+            }
+    )
+    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Message>> getMessagesForUser(){
+        return ResponseEntity.ok(this.messageService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername()));
     }
 
     @ApiResponses(value = {
@@ -178,6 +213,10 @@ public class MessageController {
             @Parameter (name = "message", required = true)
             @RequestBody (required = true) Message message){
         return ResponseEntity.ok(this.messageService.updateOne(message));
+    }
+
+    private KeycloakSecurityContext getKeycloakSecurityContext(){
+        return (KeycloakSecurityContext) request.getAttribute(KeycloakSecurityContext.class.getName());
     }
 }
 

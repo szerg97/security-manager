@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController, MenuController, NavController } from '@ionic/angular';
+import { DomController, LoadingController, MenuController, NavController } from '@ionic/angular';
 import { Security } from 'src/app/_models/security';
 import { Transaction } from 'src/app/_models/transaction';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -14,10 +14,16 @@ import { TransactionService } from 'src/app/_services/transaction.service';
   styleUrls: ['./category-details.page.scss'],
 })
 export class CategoryDetailsPage implements OnInit {
+
+  @ViewChild("denominationCtrl") denom;
   
   category: Security;
 
   isAdmin: boolean;
+
+  denomVal: number = 0;
+
+  exchangeRate: number = 0;
 
   constructor(
     private service: SecurityService,
@@ -39,10 +45,15 @@ export class CategoryDetailsPage implements OnInit {
     });
   }
 
+  onChange(){
+    this.denomVal = this.denom.value;
+  }
+
   getCategory(id: string){
     this.service.getSecurity(id).subscribe(response => {
       this.category = response;
       console.log(this.category);
+      this.exchangeRate = this.category.exchangeRate as unknown as number;
     }, error => {
       console.log(error);
     });

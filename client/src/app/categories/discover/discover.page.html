@@ -49,9 +49,11 @@
             <ion-item
             [routerLink]="['/', 'categories', 'discover', category.id]" detail *ngFor="let category of loadedCategories">
               <ion-label>
-                <p>{{ category.id }}<p>
-                <p>{{ category.name }}</p>
-                <p>{{ category.description }}</p>
+                <p><b>{{ category.name }}</b></p>
+                <p>Currency: {{ category.currency}}</p>
+                <p>Face value: {{ category.faceValue}}</p>
+                <p>Rate: {{ category.exchangeRate}}</p>
+
               </ion-label>
             </ion-item>
           </div>
