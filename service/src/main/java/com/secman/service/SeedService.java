@@ -191,7 +191,36 @@ public class SeedService {
         );
         employeeRepository.saveAll(Arrays.asList(c1, c2, c3));
     }
-    public void seedMessages(){}
+    public void seedMessages(){
+        if (!messageRepository.findAll().isEmpty())
+            return;
+        Message m1 = new Message(
+                "Message 1 from customer.",
+                false,
+                this.employeeRepository.getById(1L),
+                this.customerRepository.getById(1L)
+        );
+        Message m2 = new Message(
+                "Message 2 from customer.",
+                false,
+                this.employeeRepository.getById(1L),
+                this.customerRepository.getById(1L)
+        );
+        Message m3 = new Message(
+                "Message 3 to customer.",
+                true,
+                this.employeeRepository.getById(1L),
+                this.customerRepository.getById(1L)
+        );
+        Message m4 = new Message(
+                "Message 4 to customer.",
+                true,
+                this.employeeRepository.getById(1L),
+                this.customerRepository.getById(1L)
+        );
+
+        messageRepository.saveAll(Arrays.asList(m1, m2));
+    }
     public void seedFeedbacks(){}
     public void seedCategories(){
         if (!categoryRepository.findAll().isEmpty())

@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'distributors',
     loadChildren: () => import('./distributors/distributors.module').then( m => m.DistributorsPageModule),
+  },  {
+    path: 'messages',
+    loadChildren: () => import('./messages/messages/messages.module').then( m => m.MessagesPageModule)
   }
+
 ];
 
 @NgModule({

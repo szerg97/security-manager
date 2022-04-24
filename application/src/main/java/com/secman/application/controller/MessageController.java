@@ -88,7 +88,7 @@ public class MessageController {
                     @SecurityRequirement(name = "oauth2", scopes = {"gsec"})
             }
     )
-    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/self", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Message>> getMessagesForUser(){
         return ResponseEntity.ok(this.messageService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername()));
     }
