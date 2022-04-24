@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.List;
 
@@ -48,12 +49,18 @@ public class Security extends GSecEntity {
     @Schema(description = "Term of security")
     @NotBlank(message = "error.security.term.not-blank")
     private Double term;
+    @Schema(description = "Expiry of security")
+    @NotBlank(message = "error.security.expiration.not-blank")
+    private LocalDateTime expiration;
+    @Schema(description = "Freq of interest payments")
+    @NotBlank(message = "error.security.frequency.not-blank")
+    private Double frequency;
 
     @JsonIgnore
     @OneToMany(targetEntity = Transaction.class, mappedBy = "security")
     private List<Transaction> transactions;
 
-    public Security(String name, String description, Currency currency, Double faceValue, Double accruedInterest, Double interest, Boolean fixedInterest, Double term) {
+    public Security(String name, String description, Currency currency, Double faceValue, Double accruedInterest, Double interest, Boolean fixedInterest, Double term, LocalDateTime expiration, Double frequency) {
         super();
         this.name = name;
         this.description = description;
@@ -64,6 +71,8 @@ public class Security extends GSecEntity {
         this.fixedInterest = fixedInterest;
         this.exchangeRate = this.accruedInterest + 1;
         this.term = term;
+        this.expiration = expiration;
+        this.frequency = frequency;
     }
 
     public void copyFrom(Security category) {
@@ -76,5 +85,7 @@ public class Security extends GSecEntity {
         this.fixedInterest = category.getFixedInterest();
         this.exchangeRate = category.getExchangeRate();
         this.term = category.getTerm();
+        this.expiration = category.getExpiration();
+        this.frequency = category.getFrequency();
     }
 }

@@ -197,6 +197,8 @@ public class TransactionController {
         Portfolio portfolio = this.portfolioService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername());
         Transaction transaction = transactionMapper.toEntity(dto, portfolio);
 //        transaction.setPortfolio(portfolio);
+        portfolio.setBalance(portfolio.getBalance() - transaction.getNetValue());
+        this.portfolioService.updateOne(portfolio);
         return ResponseEntity.ok(this.transactionService.addOne(transaction));
     }
 

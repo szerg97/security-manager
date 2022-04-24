@@ -12,6 +12,8 @@ import { SecurityService } from 'src/app/_services/security.service';
 })
 export class DiscoverPage implements OnInit, OnDestroy {
 
+  searchTerm: string;
+
   loadedCategories: Security[];
   isLoading = false;
   private categoriesSub: Subscription;

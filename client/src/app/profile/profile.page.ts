@@ -30,6 +30,10 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    this.loadPortfolio();
+  }
+
   getUserDetails(){
     this.keycloakService.getKeycloakInstance().loadUserInfo()
       .then(data => {

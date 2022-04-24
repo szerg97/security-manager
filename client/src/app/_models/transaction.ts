@@ -1,11 +1,11 @@
 import { Gsec } from "./gsec";
 
 export interface Transaction extends Gsec{
-    denomination: string;
-    grossValue: string;
-    netValue: string;
-    yield: string;
-    referenceYield: string;
+    securityName: string;
+    denomination: number;
+    netValue: number;
+    yield: number;
+    referenceYield: number;
     porfolioId?: string;
     issuerId: string;
     securityId: string;

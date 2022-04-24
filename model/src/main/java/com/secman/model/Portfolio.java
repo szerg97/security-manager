@@ -19,7 +19,7 @@ public class Portfolio extends GSecEntity{
     private Customer customer;
 
     @OneToMany(targetEntity = Transaction.class, mappedBy = "portfolio")
-    private List<Transaction> securities;
+    private List<Transaction> transactions;
 
     public Portfolio(Double balance, Customer customer) {
         this.balance = balance;

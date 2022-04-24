@@ -21,9 +21,6 @@ public class Transaction extends GSecEntity {
     private Double denomination;
     @Schema(description = "Gross value of transaction")
     @NotBlank(message = "error.transaction.gross-value.not-blank")
-    private Double grossValue;
-    @Schema(description = "Net value of transaction")
-    @NotBlank(message = "error.transaction.net-value.not-blank")
     private Double netValue;
     @Schema(description = "Yield of transaction")
     @NotBlank(message = "error.transaction.yield.not-blank")
@@ -54,14 +51,33 @@ public class Transaction extends GSecEntity {
         this.portfolio = portfolio;
         this.denomination = denomination;
         this.netValue = this.denomination * this.security.getExchangeRate();
-        this.grossValue = this.netValue  + (this.netValue * this.security.getInterest() * this.security.getTerm());
-        this.yield = this.grossValue - this.netValue;
+        if (this.security.getFixedInterest())
+            this.yield = netPresentValueFixed();
+        else
+            this.yield = netPresentValueFloating();
         this.referenceYield = this.yield;
+    }
+
+    public Double netPresentValueFloating(){
+        Double res = 0.0;
+        for (int i = 1; i <= this.security.getTerm() * this.security.getFrequency(); i++){
+            res += (this.denomination + res) / Math.pow((1 + this.security.getInterest()), i) ;
+        }
+
+        return res - this.netValue;
+    }
+
+    public Double netPresentValueFixed(){
+        Double res = 0.0;
+        for (int i = 1; i <= this.security.getTerm() * this.security.getFrequency(); i++){
+            res += this.denomination / Math.pow((1 + this.security.getInterest()), i);
+        }
+
+        return res - this.netValue;
     }
 
     public void copyFrom(Transaction transaction) {
         this.denomination = transaction.getDenomination();
-        this.grossValue = transaction.getGrossValue();
         this.netValue = transaction.getNetValue();
         this.yield = transaction.getYield();
         this.referenceYield = transaction.getReferenceYield();

@@ -4,10 +4,12 @@ export interface Security extends Gsec{
   name: string;
   description: string;
   currency: string;
-  exchangeRate: string;
-  faceValue: string;
-  accruedInterest: string;
-  interest: string;
+  exchangeRate: number;
+  faceValue: number;
+  accruedInterest: number;
+  interest: number;
   fixedInterest: boolean;
-  term: string;
+  term: number;
+  expiration: Date;
+  frequency: number;
 }

@@ -1,7 +1,6 @@
 CREATE TABLE transactions(
  id BIGINT PRIMARY KEY AUTO_INCREMENT,
  denomination DECIMAL (16,2),
- gross_value DECIMAL (16,2),
  net_value DECIMAL (16,2),
  yield DECIMAL (16,2),
  reference_yield DECIMAL (16,2),

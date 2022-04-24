@@ -27,8 +27,8 @@ public class TransactionMapper {
     public TransactionDto fromEntity(Transaction from){
         return new TransactionDto(
                 from.getId(),
+                from.getSecurity().getName(),
                 from.getDenomination(),
-                from.getGrossValue(),
                 from.getNetValue(),
                 from.getYield(),
                 from.getReferenceYield(),

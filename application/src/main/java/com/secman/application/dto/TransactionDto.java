@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public class TransactionDto {
     private Long id;
+    private String securityName;
     private Double denomination;
-    private Double grossValue;
     private Double netValue;
     private Double yield;
     private Double referenceYield;
@@ -17,10 +17,10 @@ public class TransactionDto {
     public TransactionDto() {
     }
 
-    public TransactionDto(Long id, Double denomination, Double grossValue, Double netValue, Double yield, Double referenceYield, Long securityId, Long issuerId, Long portfolioId, LocalDateTime inserted) {
+    public TransactionDto(Long id, String securityName, Double denomination, Double netValue, Double yield, Double referenceYield, Long securityId, Long issuerId, Long portfolioId, LocalDateTime inserted) {
         this.id = id;
+        this.securityName = securityName;
         this.denomination = denomination;
-        this.grossValue = grossValue;
         this.netValue = netValue;
         this.yield = yield;
         this.referenceYield = referenceYield;
@@ -38,20 +38,20 @@ public class TransactionDto {
         this.id = id;
     }
 
+    public String getSecurityName() {
+        return securityName;
+    }
+
+    public void setSecurityName(String securityName) {
+        this.securityName = securityName;
+    }
+
     public Double getDenomination() {
         return denomination;
     }
 
     public void setDenomination(Double denomination) {
         this.denomination = denomination;
-    }
-
-    public Double getGrossValue() {
-        return grossValue;
-    }
-
-    public void setGrossValue(Double grossValue) {
-        this.grossValue = grossValue;
     }
 
     public Double getNetValue() {

@@ -1,6 +1,10 @@
 import { Gsec } from "./gsec";
 
 export interface Portfolio extends Gsec{
-    balance: string;
-    customerId: string;
+    balance: number;
+    securitiesTotal: number;
+    denominationTotal: number;
+    total: number;
+    customerName: string;
+    customerEmail: string;
 }

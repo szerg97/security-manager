@@ -8,12 +8,16 @@ import { DiscoverPageRoutingModule } from './discover-routing.module';
 
 import { DiscoverPage } from './discover.page';
 
+
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DiscoverPageRoutingModule
+    DiscoverPageRoutingModule,
+    Ng2SearchPipeModule
   ],
   declarations: [DiscoverPage]
 })

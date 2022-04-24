@@ -1,5 +1,7 @@
 package com.secman.application.controller;
 
+import com.secman.application.dto.PortfolioDto;
+import com.secman.application.dto.PortfolioMapper;
 import com.secman.model.Portfolio;
 import com.secman.model.Transaction;
 import com.secman.service.PortfolioService;
@@ -30,6 +32,7 @@ import java.util.List;
 public class PortfolioController {
 
     private final PortfolioService portfolioService;
+    private final PortfolioMapper portfolioMapper;
 
     @Autowired
     private HttpServletRequest request;
@@ -88,8 +91,10 @@ public class PortfolioController {
             }
     )
     @GetMapping(path = "/self", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Portfolio> getPortfolioByCustomer(){
-        return ResponseEntity.ok(this.portfolioService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername()));
+    public ResponseEntity<PortfolioDto> getPortfolioByCustomer(){
+        Portfolio portfolio = this.portfolioService.getByCustomer(this.getKeycloakSecurityContext().getToken().getPreferredUsername());
+        PortfolioDto dto = portfolioMapper.fromEntity(portfolio);
+        return ResponseEntity.ok(dto);
     }
 
     @ApiResponses(value = {

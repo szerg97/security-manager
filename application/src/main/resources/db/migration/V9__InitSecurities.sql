@@ -9,6 +9,8 @@ CREATE TABLE securities(
   interest DECIMAL (4,4),
   fixed_interest BIT,
   term DECIMAL (16,2),
+  expiration DATETIME,
+  frequency DECIMAL(2,0),
   inserted DATETIME,
   last_modified DATETIME,
   visible BIT

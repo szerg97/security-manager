@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Currency;
 
@@ -219,7 +220,7 @@ public class SeedService {
                 this.customerRepository.getById(1L)
         );
 
-        messageRepository.saveAll(Arrays.asList(m1, m2));
+        messageRepository.saveAll(Arrays.asList(m1, m2, m3, m4));
     }
     public void seedFeedbacks(){}
     public void seedCategories(){
@@ -231,30 +232,36 @@ public class SeedService {
                 "Az 1MÁP egy olyan állampapír, amely...",
                 Currency.getInstance("HUF"),
                 1000.0,
-                0.0021,
-                0.0001,
+                0.0004,
+                0.0312,
                 true,
+                5.0,
+                LocalDateTime.of(2023, 10, 20, 23, 59),
                 1.0
         );
         Security c2 = new Security(
-                "Magyar Állampapír Plusz",
-                "A MÁPP egy olyan állampapír, amely...",
+                "Féléves Magyar Állampapír 2026/J",
+                "A FMÁP egy olyan állampapír, amely...",
                 Currency.getInstance("HUF"),
                 5000.0,
-                0.0033,
-                0.0001,
+                0.0002,
+                0.0259,
                 true,
+                2.0,
+                LocalDateTime.of(2026, 10, 20, 23, 59),
                 2.0
         );
         Security c3 = new Security(
-                "Prémium Magyar Állampapír 2021/J",
+                "Prémium Magyar Állampapír 2024/J",
                 "A PMÁP egy olyan állampapír, amely...",
                 Currency.getInstance("HUF"),
                 10000.0,
-                0.0075,
-                0.0001,
+                0.0003,
+                0.0235,
                 false,
-                5.0
+                3.0,
+                LocalDateTime.of(2024, 10, 20, 23, 59),
+                1.0
         );
         categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
     }
