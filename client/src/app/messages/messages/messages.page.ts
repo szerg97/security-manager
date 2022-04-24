@@ -34,8 +34,8 @@ export class MessagesPage implements OnInit, OnDestroy {
     })
   }
 
-  onFilter(event: CustomEvent<SegmentChangeEventDetail>){
-    if(event.detail.value == 'inbox'){
+  onFilter(event: Event){
+    if((event as CustomEvent<SegmentChangeEventDetail>).detail.value == 'inbox'){
       this.isInbox = true;
     }
     else{
