@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MenuController, SegmentChangeEventDetail } from '@ionic/angular';
+import { MenuController, ModalController, SegmentChangeEventDetail } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Message } from 'src/app/_models/message';
 import { MessageService } from 'src/app/_services/message.service';
+import { NewMessagePage } from '../new-message/new-message.page';
 
 @Component({
   selector: 'app-messages',
@@ -23,6 +24,7 @@ export class MessagesPage implements OnInit, OnDestroy {
   constructor(
     public messageService: MessageService,
     private menuCtrl: MenuController,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -32,6 +34,12 @@ export class MessagesPage implements OnInit, OnDestroy {
       this.loadedInbox = this.loadedMessages.filter(x => x.toCustomer == true);
       this.menuCtrl.enable(true);
     })
+  }
+
+  openModal(){
+    this.modalCtrl.create({component: NewMessagePage}).then(modalEl => {
+      modalEl.present();
+    });
   }
 
   onFilter(event: Event){

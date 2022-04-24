@@ -22,6 +22,9 @@ public class CustomerService {
     public List<Customer> getByAddress(Address address){
         return this.customerRepository.findByAddress(address);
     }
+    public Customer getByEmail(String email){
+        return this.customerRepository.findByEmail(email);
+    }
 
     public Customer getOne(Long id){
         Optional<Customer> optional = this.customerRepository.findById(id);

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>New message</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form id="fm" #fm="ngForm" (ngSubmit)="onSubmit(fm)">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-textarea 
+            rows="8" 
+            name="content"
+            ngModel
+            required
+            #nameCtrl="ngModel"
+            placeholder="We are happy to help you, ask freely...">
+            </ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button
+          type="submit"
+          color="primary"
+          expand="block"
+          [disabled]="!fm.valid">
+          Send
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+</ion-content>

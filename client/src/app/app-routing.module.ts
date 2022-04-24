@@ -25,6 +25,10 @@ const routes: Routes = [
   },  {
     path: 'messages',
     loadChildren: () => import('./messages/messages/messages.module').then( m => m.MessagesPageModule)
+  },
+  {
+    path: 'new-message',
+    loadChildren: () => import('./messages/new-message/new-message.module').then( m => m.NewMessagePageModule)
   }
 
 ];

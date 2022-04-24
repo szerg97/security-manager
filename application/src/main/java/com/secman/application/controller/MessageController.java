@@ -1,6 +1,10 @@
 package com.secman.application.controller;
 
+import com.secman.application.dto.MessageDto;
+import com.secman.application.dto.MessageMapper;
 import com.secman.model.Message;
+import com.secman.service.CustomerService;
+import com.secman.service.EmployeeService;
 import com.secman.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,6 +35,9 @@ import java.util.List;
 public class MessageController {
 
     private final MessageService messageService;
+    private final MessageMapper messageMapper;
+    private final EmployeeService employeeService;
+    private final CustomerService customerService;
 
     @Autowired
     private HttpServletRequest request;
@@ -181,8 +188,9 @@ public class MessageController {
     public ResponseEntity<Message> addOneMessage(
             @Valid
             @Parameter (name = "message", required = true)
-            @RequestBody (required = true) Message message){
-        return ResponseEntity.created(URI.create("messages/{id}")).body(this.messageService.addOne(message));
+            @RequestBody (required = true) MessageDto dto){
+        Message message = messageMapper.toEntity(dto, this.employeeService.getOne(1L), this.customerService.getByEmail(getKeycloakSecurityContext().getToken().getPreferredUsername()));
+        return ResponseEntity.created(URI.create("messages")).body(this.messageService.addOne(message));
     }
 
     @ApiResponses(value = {

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Message } from '../_models/message';
 
@@ -10,7 +10,7 @@ import { Message } from '../_models/message';
 })
 export class MessageService {
 
-  baseUrl = `${environment.apiUrl}messages/self`;
+  baseUrl = `${environment.apiUrl}messages`;
 
   private _messages = new BehaviorSubject<Message[]>([]);
 
@@ -21,8 +21,24 @@ export class MessageService {
   constructor(private http: HttpClient) {
   }
 
+  addMessage(model: Message){
+    let generatedId: string;
+    return this.http.post<Message>(this.baseUrl, model)
+    .pipe(
+      switchMap(secData => {
+        generatedId = secData.id;
+        return this.messages;
+      }),
+      take(1),
+      tap(securities => {
+        model.id = generatedId;
+        this._messages.next(securities.concat(model));
+      })
+    );
+  }
+
   fetchMessages(){
-    return this.http.get<Message[]>(this.baseUrl)
+    return this.http.get<Message[]>(`${this.baseUrl}/self`)
     .pipe(
       map(response => {
         const messages: Message[] = [];
