@@ -93,6 +93,7 @@ public class Application {
             seeder.seedCities();
             seeder.seedAddresses();
             seeder.seedCustomers();
+            seeder.seedOpeningHours();
             seeder.seedIssuers();
             seeder.seedEmployees();
             seeder.seedMessages();

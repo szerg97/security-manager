@@ -1,5 +1,7 @@
 package com.secman.application.controller;
 
+import com.secman.application.dto.IssuerDto;
+import com.secman.application.dto.IssuerMapper;
 import com.secman.model.Issuer;
 import com.secman.service.IssuerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +30,7 @@ import java.util.List;
 public class IssuerController {
 
     private final IssuerService issuerService;
+    private final IssuerMapper issuerMapper;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
@@ -83,10 +86,11 @@ public class IssuerController {
             }
     )
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Issuer> getOneIssuer(
+    public ResponseEntity<IssuerDto> getOneIssuer(
             @Parameter(name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
-        return ResponseEntity.ok(this.issuerService.getOne(id));
+        IssuerDto dto = this.issuerMapper.fromEntity(this.issuerService.getOne(id));
+        return ResponseEntity.ok(dto);
     }
 
     @ApiResponses(value = {

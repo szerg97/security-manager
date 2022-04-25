@@ -38,18 +38,24 @@ public class Issuer extends GSecEntity {
     @JsonIgnore
     @ManyToOne(targetEntity = Address.class)
     private Address address;
+    @Schema(description = "Opening hours of the issuer")
+    @NotBlank(message = "error.issuer.opening-hours.not-blank")
+    @JsonIgnore
+    @ManyToOne(targetEntity = OpeningHours.class)
+    private OpeningHours openingHours;
 
     @JsonIgnore
     @OneToMany(targetEntity = Transaction.class, mappedBy = "issuer")
     private List<Transaction> transactions;
 
-    public Issuer(String name, String email, String phone, Boolean status, Address address) {
+    public Issuer(String name, String email, String phone, Boolean status, Address address, OpeningHours openingHours) {
         super();
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.status = status;
         this.address = address;
+        this.openingHours = openingHours;
     }
 
     public void copyFrom(Issuer issuer) {
@@ -58,5 +64,6 @@ public class Issuer extends GSecEntity {
         this.phone = issuer.getPhone();
         this.status = issuer.getStatus();
         this.address = issuer.getAddress();
+        this.openingHours = issuer.getOpeningHours();
     }
 }

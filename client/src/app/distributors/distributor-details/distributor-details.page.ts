@@ -14,6 +14,8 @@ export class DistributorDetailsPage implements OnInit {
 
   distributor: Issuer;
 
+  isOpen: boolean;
+
   isAdmin: boolean;
 
   constructor(
@@ -32,6 +34,27 @@ export class DistributorDetailsPage implements OnInit {
       const categoryId = paramMap.get('id');
       this.getCategory(categoryId);
     });
+    this.isOpen = this.getIfOpenOrNot();
+  }
+
+  getIfOpenOrNot(): boolean{
+    const day = this.getToday();
+    if(day == "Saturday"){
+      return true;
+    }
+    else if(day == "Sunday"){
+      return true;
+    }
+    else{
+      return true;
+    }
+  }
+
+  getToday(): string{
+    const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+    const d = new Date();
+    return weekday[d.getUTCDay()];
   }
 
   getCategory(id: string){

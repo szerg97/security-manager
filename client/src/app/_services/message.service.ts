@@ -25,14 +25,14 @@ export class MessageService {
     let generatedId: string;
     return this.http.post<Message>(this.baseUrl, model)
     .pipe(
-      switchMap(secData => {
-        generatedId = secData.id;
+      switchMap(message => {
+        generatedId = message.id;
         return this.messages;
       }),
       take(1),
-      tap(securities => {
+      tap(messages => {
         model.id = generatedId;
-        this._messages.next(securities.concat(model));
+        this._messages.next(messages.concat(model));
       })
     );
   }

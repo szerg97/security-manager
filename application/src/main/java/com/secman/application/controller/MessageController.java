@@ -187,7 +187,7 @@ public class MessageController {
     @PostMapping("")
     public ResponseEntity<Message> addOneMessage(
             @Valid
-            @Parameter (name = "message", required = true)
+            @Parameter (name = "dto", required = true)
             @RequestBody (required = true) MessageDto dto){
         Message message = messageMapper.toEntity(dto, this.employeeService.getOne(1L), this.customerService.getByEmail(getKeycloakSecurityContext().getToken().getPreferredUsername()));
         return ResponseEntity.created(URI.create("messages")).body(this.messageService.addOne(message));

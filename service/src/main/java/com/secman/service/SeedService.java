@@ -25,6 +25,7 @@ public class SeedService {
     private final SecurityRepository categoryRepository;
     private final TransactionRepository transactionRepository;
     private final PortfolioRepository portfolioRepository;
+    private final OpeningHoursRepository openingHoursRepository;
 
     public void seedCountries(){
         if (!countryRepository.findAll().isEmpty())
@@ -141,6 +142,27 @@ public class SeedService {
         );
         portfolioRepository.saveAll(Arrays.asList(p1, p2, p3));
     }
+    public void seedOpeningHours(){
+        if (!openingHoursRepository.findAll().isEmpty())
+            return;
+
+        OpeningHours h1 = new OpeningHours(
+                "08:00-17:30",
+                "10:00-16:00",
+                null
+        );
+        OpeningHours h2 = new OpeningHours(
+                "08:00-17:30",
+                "10:00-17:30",
+                null
+        );
+        OpeningHours h3 = new OpeningHours(
+                "08:00-17:30",
+                "08:00-16:00",
+                "08:00-11:00"
+        );
+        openingHoursRepository.saveAll(Arrays.asList(h1, h2, h3));
+    }
     public void seedIssuers(){
         if (!issuerRepository.findAll().isEmpty())
             return;
@@ -150,21 +172,24 @@ public class SeedService {
                 "issuer@issuer.issuer",
                 "0612456969",
                 true,
-                addressRepository.findById(1L).get()
+                addressRepository.findById(1L).get(),
+                openingHoursRepository.findById(1L).get()
         );
         Issuer c2 = new Issuer(
                 "OTP Bank",
                 "info@otpbank.hu",
                 "0615554545",
                 true,
-                addressRepository.findById(2L).get()
+                addressRepository.findById(2L).get(),
+                openingHoursRepository.findById(2L).get()
         );
         Issuer c3 = new Issuer(
                 "MKB Bank",
                 "info@mkbbank.hu",
                 "06953342323",
                 true,
-                addressRepository.findById(3L).get()
+                addressRepository.findById(3L).get(),
+                openingHoursRepository.findById(3L).get()
         );
         issuerRepository.saveAll(Arrays.asList(c1, c2, c3));
     }

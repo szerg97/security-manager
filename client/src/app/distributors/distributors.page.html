@@ -32,8 +32,10 @@
             [routerLink]="['/', 'distributors', issuer.id]" detail
             >
               <ion-label>
-                <p>{{ issuer.id }}<p>
                 <p>{{ issuer.name }}</p>
+                <p>{{ issuer.name }}</p>
+                <p>{{ issuer.email }}</p>
+                <p>{{ issuer.phone }}</p>
                 <p>{{ issuer.status === true ? 'Open' : 'Closed' }}</p>
               </ion-label>
             </ion-item>
@@ -51,9 +53,10 @@
           <ion-item
           [routerLink]="['/', 'distributors', issuer.id]" detail *ngFor="let issuer of loadedDistributors">
             <ion-label>
-              <p>{{ issuer.id }}<p>
-              <p>{{ issuer.name }}</p>
-              <p>{{ issuer.status === true ? 'Open' : 'Closed' }}</p>
+              <p><b>{{ issuer.name }}</b></p>
+                <p>{{ issuer.email }}</p>
+                <p>{{ issuer.phone }}</p>
+                <p>{{ issuer.status === true ? 'Open' : 'Closed' }}</p>
             </ion-label>
           </ion-item>
          </div>

@@ -43,6 +43,8 @@ export class MessagesPage implements OnInit, OnDestroy {
   }
 
   onFilter(event: Event){
+    this.loadedOutbox = this.loadedMessages.filter(x => x.toCustomer == false);
+    this.loadedInbox = this.loadedMessages.filter(x => x.toCustomer == true);
     if((event as CustomEvent<SegmentChangeEventDetail>).detail.value == 'inbox'){
       this.isInbox = true;
     }
