@@ -56,7 +56,8 @@
               <p><b>{{ issuer.name }}</b></p>
                 <p>{{ issuer.email }}</p>
                 <p>{{ issuer.phone }}</p>
-                <p>{{ issuer.status === true ? 'Open' : 'Closed' }}</p>
+                <p *ngIf="issuer.status == true"><ion-badge color="success">Open</ion-badge></p>
+                <p *ngIf="issuer.status != true"><ion-badge color="danger">Closed</ion-badge></p>
             </ion-label>
           </ion-item>
          </div>

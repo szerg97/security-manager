@@ -32,34 +32,54 @@ export class DistributorDetailsPage implements OnInit {
         return;
       }
       const categoryId = paramMap.get('id');
-      this.getCategory(categoryId);
+      this.getIssuer(categoryId);
     });
-    this.isOpen = this.getIfOpenOrNot();
   }
 
-  getIfOpenOrNot(): boolean{
+  private getLocalTimeString(): string{
+    const d = new Date();
+    const value = d.toLocaleTimeString();
+    return value.substring(0,2) + value.substring(3,5);
+  }
+
+  private getIfOpenOrNot(): boolean{
     const day = this.getToday();
+    let start = "";
+    let end = "";
+    let from = 0;
+    let to = 0;
+    let q = 0;
+
     if(day == "Saturday"){
-      return true;
+      start = this.distributor.saturday.substring(0, 2) + this.distributor.saturday.substring(3, 5);
+      end = this.distributor.saturday.substring(6, 8) + this.distributor.saturday.substring(9, 12);
     }
     else if(day == "Sunday"){
-      return true;
+      start = this.distributor.sunday.substring(0, 2) + this.distributor.sunday.substring(3, 5);
+      end = this.distributor.sunday.substring(6, 8) + this.distributor.sunday.substring(9, 12);
     }
     else{
-      return true;
+      start = this.distributor.weekdays.substring(0, 2) + this.distributor.weekdays.substring(3, 5);
+      end = this.distributor.weekdays.substring(6, 8) + this.distributor.weekdays.substring(9, 12);
     }
+
+    from = parseInt(start);
+    to = parseInt(end);
+    q = parseInt(this.getLocalTimeString());
+    return q >= from && q <= to;
   }
 
-  getToday(): string{
+  private getToday(): string{
     const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
     const d = new Date();
     return weekday[d.getUTCDay()];
   }
 
-  getCategory(id: string){
+  getIssuer(id: string){
     this.service.getDistributor(id).subscribe(response => {
       this.distributor = response;
+      this.isOpen = this.getIfOpenOrNot();
       console.log(response);
     }, error => {
       console.log(error);

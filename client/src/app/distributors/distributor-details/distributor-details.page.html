@@ -23,9 +23,10 @@
           <ion-card-content>
             <p *ngIf="isAdmin">Identifier: {{ distributor.id}}</p>
             <p><ion-icon name="location-sharp"></ion-icon> {{ distributor.country }}, {{ distributor.city }}, {{ distributor.address }}</p>
-            <p><ion-icon name="at-sharp"></ion-icon> {{ distributor.email}}</p>
+            <p><ion-icon name="mail-sharp"></ion-icon> {{ distributor.email}}</p>
             <p><ion-icon name="call-sharp"></ion-icon> {{ distributor.phone}}</p>
-            <p><ion-icon name="key-sharp"></ion-icon> {{ isOpen == true ? 'Open' : 'Closed'}}</p>
+            <p *ngIf="isOpen == true"><ion-badge color="success">Open</ion-badge></p>
+            <p *ngIf="isOpen == false"><ion-badge color="danger">Closed</ion-badge></p>
             <p>Weekdays: {{ distributor.weekdays }}</p>
             <p>Saturday: {{ distributor.saturday }}</p>
             <p *ngIf="distributor.sunday">Sunday: {{ distributor.sunday }}</p>
