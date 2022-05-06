@@ -2,9 +2,13 @@ package com.secman.application.controller;
 
 import com.secman.application.dto.TransactionDto;
 import com.secman.application.dto.TransactionMapper;
+import com.secman.application.dto.TransactionsBySecuritiesDto;
+import com.secman.application.dto.TransactionsBySecuritiesMapper;
 import com.secman.model.Portfolio;
+import com.secman.model.Security;
 import com.secman.model.Transaction;
 import com.secman.service.PortfolioService;
+import com.secman.service.SecurityService;
 import com.secman.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,7 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/transactions")
@@ -37,6 +43,8 @@ public class TransactionController {
 
     private final TransactionMapper transactionMapper;
     private final TransactionService transactionService;
+    private final SecurityService securityService;
+    private final TransactionsBySecuritiesMapper transactionsBySecuritiesMapper;
     private final PortfolioService portfolioService;
 
     @Autowired
@@ -101,6 +109,40 @@ public class TransactionController {
         List<Transaction> transactions = this.transactionService.getByPortfolio(portfolio);
         List<TransactionDto> dtos = new ArrayList<>();
         transactions.forEach(t -> dtos.add(transactionMapper.fromEntity(t)));
+        return ResponseEntity.ok(dtos);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Request successful",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Transaction.class))) }),
+            @ApiResponse(responseCode = "400", description = "Validation error",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Transaction.class))) }),
+            @ApiResponse(responseCode = "401", description = "Token expired",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "403", description = "You do not have permission",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "302", description = "You are not logged in, redirecting",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = { @Content(mediaType = "application/json")}),
+    })
+    @Operation(
+            summary = "Query for stats 1",
+            security = {
+                    @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
+                    @SecurityRequirement(name = "openid", scopes = {"gsec"}),
+                    @SecurityRequirement(name = "oauth2", scopes = {"gsec"})
+            }
+    )
+    @GetMapping(path = "/stats", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TransactionsBySecuritiesDto>> getTransactionsBySecurities(){
+        Map<Security, List<Transaction>> map = new HashMap<>();
+        this.securityService.getAll().forEach(x -> {
+            map.put(x, transactionService.getBySecurity(x));
+        });
+        List<TransactionsBySecuritiesDto> dtos = transactionsBySecuritiesMapper.fromEntitiesMap(map);
         return ResponseEntity.ok(dtos);
     }
 

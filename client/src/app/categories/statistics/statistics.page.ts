@@ -26,6 +26,10 @@ import {
   Title,
   Tooltip
 } from 'chart.js';
+import { Stat1 } from 'src/app/_models/stat1';
+import { SecurityService } from 'src/app/_services/security.service';
+import { StatService } from 'src/app/_services/stat.service';
+import { TransactionService } from 'src/app/_services/transaction.service';
 
 Chart.register(
   ArcElement,
@@ -64,10 +68,31 @@ export class StatisticsPage implements OnInit {
 
   bars: any;
   colorArray: any;
-  constructor() { }
+
+  stats1: Stat1[];
+
+  constructor(
+    private statService: StatService
+    ) { }
 
   ionViewDidEnter() {
-    this.createBarChart();
+    this.loadStats1();
+  }
+
+  loadStats1(){
+    this.statService.fetchStats().subscribe(result => {
+      this.stats1 = result;
+      this.createBarChart();
+    });
+  }
+
+  getValues(map:  Map<number, number>){
+    const arr = [];
+    Object.keys(map).forEach(key=>{
+       arr.push(map[key])
+    });
+
+    return arr;
   }
 
   createBarChart() {
@@ -75,22 +100,28 @@ export class StatisticsPage implements OnInit {
     type: 'line',
     data: {
         datasets: [{
-            label: 'MAP+',
-            data: [0, 20, 50, 80],
+            label: this.stats1[0].securityName,
+            data: this.getValues(this.stats1[0].numberOfTransactions),
             backgroundColor: 'rgb(38, 194, 129)'
         },
         {
-          label: 'MAP',
-          data: [0, 30, 35, 60],
+          label: this.stats1[1].securityName,
+          data: this.getValues(this.stats1[1].numberOfTransactions),
           backgroundColor: 'rgb(255, 0, 0)'
-      }],
-        labels: ['January', 'February', 'March', 'April']
+      },
+      {
+        label: this.stats1[2].securityName,
+        data: this.getValues(this.stats1[2].numberOfTransactions),
+        backgroundColor: 'rgb(255, 0, 255)'
+    }
+    ],
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     },
     options: {
         scales: {
             y: {
-                suggestedMin: 50,
-                suggestedMax: 100
+                suggestedMin: 0,
+                suggestedMax: 5
             }
         }
     }
