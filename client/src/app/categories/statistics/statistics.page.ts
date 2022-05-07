@@ -121,7 +121,7 @@ export class StatisticsPage implements OnInit {
         scales: {
             y: {
                 suggestedMin: 0,
-                suggestedMax: 5
+                suggestedMax: 300
             }
         }
     }

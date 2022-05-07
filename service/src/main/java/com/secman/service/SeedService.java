@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Currency;
+import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -26,6 +27,7 @@ public class SeedService {
     private final TransactionRepository transactionRepository;
     private final PortfolioRepository portfolioRepository;
     private final OpeningHoursRepository openingHoursRepository;
+    private final Random rnd = new Random();
 
     public void seedCountries(){
         if (!countryRepository.findAll().isEmpty())
@@ -74,22 +76,15 @@ public class SeedService {
         if (!addressRepository.findAll().isEmpty())
             return;
 
-        Address c1 = new Address(
-                "Ady Endre Street 45.",
-                "Door 7.",
-                cityRepository.findById(1L).get()
-        );
-        Address c2 = new Address(
-                "Bajza Street 125.",
-                "Door 23.",
-                cityRepository.findById(2L).get()
-        );
-        Address c3 = new Address(
-                "Petőfi Sándor Street 78.",
-                "",
-                cityRepository.findById(2L).get()
-        );
-        addressRepository.saveAll(Arrays.asList(c1, c2, c3));
+        for (int i = 1; i < 101; i++) {
+            Address a = new Address(
+                    "Test Street " + i,
+                    "Door " + (i + 100),
+                    cityRepository.findById(1L).get()
+            );
+            addressRepository.save(a);
+        }
+
     }
     public void seedCustomers(){
         if (!customerRepository.findAll().isEmpty())
@@ -104,43 +99,32 @@ public class SeedService {
                 LocalDate.of(1989, 2, 13),
                 addressRepository.findById(1L).get()
         );
-        Customer c2 = new Customer(
-                "Karoly",
-                "Kelemen",
-                "karcsibacsi@gmail.com",
-                "06705542121",
-                "234567LE",
-                LocalDate.of(1968, 7, 23),
-                addressRepository.findById(2L).get()
-        );
-        Customer c3 = new Customer(
-                "Csaba",
-                "Kovacs",
-                "csabi78@gmail.com",
-                "06305632323",
-                "789456KM",
-                LocalDate.of(1978, 11, 2),
-                addressRepository.findById(3L).get()
-        );
-        customerRepository.saveAll(Arrays.asList(c1, c2, c3));
+        customerRepository.save(c1);
+
+        for (int i = 1; i < 101; i++) {
+            Customer c = new Customer(
+                    "Customer" + i,
+                    "Customer" + i,
+                    "customer" + i + "@customer" + i + ".customer" + i,
+                    "0630563" + i,
+                    "123" + i + "ED",
+                    LocalDate.of((int)Math.floor(Math.random()*(2001-1960+1)+1960), 1, 30),
+                    addressRepository.findById(Long.valueOf(i)).get()
+            );
+            customerRepository.save(c);
+        }
     }
     public void seedPortfolios(){
         if (!portfolioRepository.findAll().isEmpty())
             return;
 
-        Portfolio p1 = new Portfolio(
-                1500000.0,
-                customerRepository.findById(1L).get()
-        );
-        Portfolio p2 = new Portfolio(
-                1800000.0,
-                customerRepository.findById(2L).get()
-        );
-        Portfolio p3 = new Portfolio(
-                2500000.0,
-                customerRepository.findById(3L).get()
-        );
-        portfolioRepository.saveAll(Arrays.asList(p1, p2, p3));
+        for (int i = 1; i < 101; i++) {
+            Portfolio p1 = new Portfolio(
+                    Math.floor(Math.random() * (10000000 - 1500000 + 1) + 1500000),
+                    customerRepository.findById(Long.valueOf(i)).get()
+            );
+            portfolioRepository.save(p1);
+        }
     }
     public void seedOpeningHours(){
         if (!openingHoursRepository.findAll().isEmpty())
@@ -175,23 +159,19 @@ public class SeedService {
                 addressRepository.findById(1L).get(),
                 openingHoursRepository.findById(1L).get()
         );
-        Issuer c2 = new Issuer(
-                "OTP Bank",
-                "info@otpbank.hu",
-                "0615554545",
-                true,
-                addressRepository.findById(2L).get(),
-                openingHoursRepository.findById(2L).get()
-        );
-        Issuer c3 = new Issuer(
-                "MKB Bank",
-                "info@mkbbank.hu",
-                "06953342323",
-                true,
-                addressRepository.findById(3L).get(),
-                openingHoursRepository.findById(3L).get()
-        );
-        issuerRepository.saveAll(Arrays.asList(c1, c2, c3));
+        issuerRepository.save(c1);
+
+        for (int i = 1; i < 50; i++) {
+            Issuer c = new Issuer(
+                    "Test Issuer" + i,
+                    "issuer" + i + "@issuer" + i + ".issuer" + i,
+                    "06124569" + i,
+                    true,
+                    addressRepository.findById(Long.valueOf(i)).get(),
+                    openingHoursRepository.findById(2L).get()
+            );
+            issuerRepository.save(c);
+        }
     }
     public void seedEmployees(){
         if (!employeeRepository.findAll().isEmpty())
@@ -294,25 +274,16 @@ public class SeedService {
         if (!transactionRepository.findAll().isEmpty())
             return;
 
-        Transaction c1 = new Transaction(
-                categoryRepository.findById(1L).get(),
-                issuerRepository.findById(1L).get(),
-                portfolioRepository.findById(1L).get(),
-                55000.0
-        );
-        Transaction c2 = new Transaction(
-                categoryRepository.findById(2L).get(),
-                issuerRepository.findById(2L).get(),
-                portfolioRepository.findById(2L).get(),
-                35000.0
-        );
-        Transaction c3 = new Transaction(
-                categoryRepository.findById(3L).get(),
-                issuerRepository.findById(3L).get(),
-                portfolioRepository.findById(3L).get(),
-                75000.0
-        );
-        transactionRepository.saveAll(Arrays.asList(c1, c2, c3));
+        for (int i = 1; i < 1001; i++) {
+            Transaction c1 = new Transaction(
+                    categoryRepository.findById((long) rnd.nextInt(3 - 1 + 1) + 1).get(),
+                    issuerRepository.findById((long) rnd.nextInt(50 - 1 + 1) + 1).get(),
+                    portfolioRepository.findById((long) rnd.nextInt(100 - 1 + 1) + 1).get(),
+                    Math.floor(Math.random() * (10 - 1 + 1) + 1) * 1000
+            );
+            c1.setInserted(LocalDateTime.of(2022, (int)Math.floor(Math.random()*(12-1+1)+1), 16, 17, 0));
+            transactionRepository.save(c1);
+        }
     }
 
 }

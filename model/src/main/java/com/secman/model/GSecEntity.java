@@ -17,7 +17,7 @@ public abstract class GSecEntity {
     )
     private Long id;
     @Schema(description = "Insertion time")
-    private final LocalDateTime inserted;
+    private LocalDateTime inserted;
     @Schema(description = "Modification time")
     private LocalDateTime lastModified;
     @Schema(description = "Visibility")
@@ -34,5 +34,9 @@ public abstract class GSecEntity {
 
     public void setVisible(Boolean visible) {
         this.visible = visible;
+    }
+
+    public void setInserted(LocalDateTime inserted) {
+        this.inserted = inserted;
     }
 }
