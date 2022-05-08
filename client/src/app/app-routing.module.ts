@@ -22,7 +22,12 @@ const routes: Routes = [
   {
     path: 'distributors',
     loadChildren: () => import('./distributors/distributors.module').then( m => m.DistributorsPageModule),
-  },  {
+  },
+  {
+    path: 'transactions',
+    loadChildren: () => import('./transactions/transactions.module').then( m => m.TransactionsPageModule)
+  },
+  {
     path: 'messages',
     loadChildren: () => import('./messages/messages/messages.module').then( m => m.MessagesPageModule)
   },

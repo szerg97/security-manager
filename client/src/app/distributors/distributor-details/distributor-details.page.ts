@@ -50,17 +50,20 @@ export class DistributorDetailsPage implements OnInit {
     let to = 0;
     let q = 0;
 
-    if(day == "Saturday"){
+    if(day == "Saturday" && this.distributor.saturday){
       start = this.distributor.saturday.substring(0, 2) + this.distributor.saturday.substring(3, 5);
       end = this.distributor.saturday.substring(6, 8) + this.distributor.saturday.substring(9, 12);
     }
-    else if(day == "Sunday"){
+    else if(day == "Sunday" && this.distributor.sunday){
       start = this.distributor.sunday.substring(0, 2) + this.distributor.sunday.substring(3, 5);
       end = this.distributor.sunday.substring(6, 8) + this.distributor.sunday.substring(9, 12);
     }
-    else{
+    else if (this.distributor.weekdays){
       start = this.distributor.weekdays.substring(0, 2) + this.distributor.weekdays.substring(3, 5);
       end = this.distributor.weekdays.substring(6, 8) + this.distributor.weekdays.substring(9, 12);
+    }
+    else{
+      return false;
     }
 
     from = parseInt(start);

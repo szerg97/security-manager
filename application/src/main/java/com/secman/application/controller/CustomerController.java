@@ -1,5 +1,7 @@
 package com.secman.application.controller;
 
+import com.secman.application.dto.DemographyDto;
+import com.secman.application.dto.DemographyMapper;
 import com.secman.model.Customer;
 import com.secman.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +30,7 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final DemographyMapper mapper;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
@@ -56,6 +59,36 @@ public class CustomerController {
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Customer>> getAllCustomers(){
         return ResponseEntity.ok(this.customerService.getAll());
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Request successful",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Customer.class))) }),
+            @ApiResponse(responseCode = "400", description = "Validation error",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Customer.class))) }),
+            @ApiResponse(responseCode = "401", description = "Token expired",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "403", description = "You do not have permission",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "302", description = "You are not logged in, redirecting",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = { @Content(mediaType = "application/json")}),
+    })
+    @Operation(
+            summary = "Query all customers",
+            security = {
+                    @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
+                    @SecurityRequirement(name = "openid", scopes = {"gsec"}),
+                    @SecurityRequirement(name = "oauth2", scopes = {"gsec"})
+            }
+    )
+    @GetMapping(path = "/stats", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DemographyDto> getDemography(){
+        DemographyDto dto = this.mapper.fromEntities(this.customerService.getAll());
+        return ResponseEntity.ok(dto);
     }
 
     @ApiResponses(value = {

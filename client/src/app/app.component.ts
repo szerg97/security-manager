@@ -12,13 +12,15 @@ import { AuthService } from './_services/auth.service';
 export class AppComponent {
 
   user: User;
+  isAdmin: boolean;
 
   constructor(
     private keycloakService: KeycloakService,
     private authService: AuthService
     ){
-    this.getUserDetails();
-    this.setRoles();
+      this.getUserDetails();
+      this.setRoles();
+      this.isAdmin = this.authService.getUserRoles.includes('gsec'); 
   }
 
   onLogout(){

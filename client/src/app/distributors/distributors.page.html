@@ -21,22 +21,31 @@
    </ion-row>
   </ion-grid>
   <ion-grid *ngIf="!isLoading && loadedDistributors.length > 0">
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2">
+        <ion-searchbar 
+        placeholder="Search"
+        [(ngModel)]="searchTerm"
+        >
+      </ion-searchbar>
+      </ion-col>
+     </ion-row>
    <ion-row>
      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
        <ion-list
          *ngIf="(loadedDistributors)">
          <div *ngIf="isAdmin">
-          <ion-item-sliding *ngFor="let issuer of loadedDistributors"
+          <ion-item-sliding *ngFor="let issuer of loadedDistributors | filter:searchTerm"
           #slidingDistributors>
             <ion-item
             [routerLink]="['/', 'distributors', issuer.id]" detail
             >
               <ion-label>
                 <p>{{ issuer.name }}</p>
-                <p>{{ issuer.name }}</p>
                 <p>{{ issuer.email }}</p>
                 <p>{{ issuer.phone }}</p>
-                <p>{{ issuer.status === true ? 'Open' : 'Closed' }}</p>
+                <p *ngIf="issuer.status == true"><ion-badge color="success">Open</ion-badge></p>
+                <p *ngIf="issuer.status != true"><ion-badge color="danger">Closed</ion-badge></p>
               </ion-label>
             </ion-item>
             <ion-item-options>
@@ -51,7 +60,7 @@
          </div>
          <div *ngIf="!isAdmin">
           <ion-item
-          [routerLink]="['/', 'distributors', issuer.id]" detail *ngFor="let issuer of loadedDistributors">
+          [routerLink]="['/', 'distributors', issuer.id]" detail *ngFor="let issuer of loadedDistributors | filter:searchTerm">
             <ion-label>
               <p><b>{{ issuer.name }}</b></p>
                 <p>{{ issuer.email }}</p>

@@ -4,12 +4,12 @@
     <ion-label>Discover</ion-label>
     <ion-icon name="search-sharp"></ion-icon>
   </ion-tab-button>
-  <ion-tab-button tab="purchased">
+  <ion-tab-button *ngIf="!isAdmin" tab="purchased">
     <ion-label>Purchased</ion-label>
     <ion-icon name="card-sharp"></ion-icon>
   </ion-tab-button>
   <ion-tab-button tab="statistics">
-    <ion-label>Portfolio</ion-label>
+    <ion-label>Statistics</ion-label>
     <ion-icon name="bar-chart-sharp"></ion-icon>
   </ion-tab-button>
   </ion-tab-bar>

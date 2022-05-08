@@ -1,9 +1,6 @@
 package com.secman.application.controller;
 
-import com.secman.application.dto.TransactionDto;
-import com.secman.application.dto.TransactionMapper;
-import com.secman.application.dto.TransactionsBySecuritiesDto;
-import com.secman.application.dto.TransactionsBySecuritiesMapper;
+import com.secman.application.dto.*;
 import com.secman.model.Portfolio;
 import com.secman.model.Security;
 import com.secman.model.Transaction;
@@ -76,7 +73,7 @@ public class TransactionController {
     )
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Transaction>> getAllTransactions(){
-        return ResponseEntity.ok(this.transactionService.getAll());
+        return ResponseEntity.ok(this.transactionService.getAll().subList(0, 50));
     }
 
     @ApiResponses(value = {
@@ -175,6 +172,38 @@ public class TransactionController {
             @Parameter(name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
         TransactionDto dto = transactionMapper.fromEntity(this.transactionService.getOne(id));
+        return ResponseEntity.ok(dto);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Request successful",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Transaction.class))) }),
+            @ApiResponse(responseCode = "400", description = "Validation error",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Transaction.class))) }),
+            @ApiResponse(responseCode = "401", description = "Token expired",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "403", description = "You do not have permission",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "302", description = "You are not logged in, redirecting",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = { @Content(mediaType = "application/json")}),
+    })
+    @Operation(
+            summary = "Query extended security",
+            security = {
+                    @SecurityRequirement(name = "apikey", scopes = {"gsec"}),
+                    @SecurityRequirement(name = "openid", scopes = {"gsec"}),
+                    @SecurityRequirement(name = "oauth2", scopes = {"gsec"})
+            }
+    )
+    @GetMapping(path = "/ext/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TransactionExtendedDto> getExtendedTransaction(
+            @Parameter(name = "id", required = true)
+            @PathVariable(name = "id", required = true) Long id){
+        TransactionExtendedDto dto = transactionMapper.fromEntityExtended(this.transactionService.getOne(id));
         return ResponseEntity.ok(dto);
     }
 

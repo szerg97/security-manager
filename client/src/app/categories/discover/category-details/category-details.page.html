@@ -41,7 +41,7 @@
     </ion-row>
   </ion-grid>
   
-  <form id="f1" #f1="ngForm" (ngSubmit)="onPurchase(f1)">
+  <form *ngIf="!isAdmin" id="f1" #f1="ngForm" (ngSubmit)="onPurchase(f1)">
     <ion-grid>
       
       <ion-row>

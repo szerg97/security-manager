@@ -6,10 +6,18 @@
 <ion-content>
   <ion-card class="welcome-card">
     <ion-card-header>
-      <ion-card-title>Security owners this year</ion-card-title>
+      <ion-card-title>Number of transactions this year</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <canvas #barChart></canvas>
+      <canvas class="barChart" #barChart></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="welcome-card">
+    <ion-card-header>
+      <ion-card-title>Age distribution</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas class="pieChart" #pieChart></canvas>
     </ion-card-content>
   </ion-card>
 </ion-content>

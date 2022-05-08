@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Portfolio } from '../_models/portfolio';
 import { User } from '../_models/user';
+import { AuthService } from '../_services/auth.service';
 import { PortfolioService } from '../_services/portfolio.service';
 
 @Component({
@@ -13,15 +14,17 @@ export class ProfilePage implements OnInit {
 
   portfolio: Portfolio;
   user: User;
+  isAdmin: boolean;
 
   constructor(
     private portfolioService: PortfolioService,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private authService: AuthService
     ) { }
 
   ngOnInit() {
+    this.isAdmin = this.authService.getUserRoles.includes('gsec');
     this.getUserDetails();
-    this.loadPortfolio();
   }
 
   loadPortfolio(){
@@ -31,7 +34,9 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.loadPortfolio();
+    if (!this.isAdmin){
+      this.loadPortfolio();
+    }
   }
 
   getUserDetails(){

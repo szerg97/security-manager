@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DistributorsPageRoutingModule } from './distributors-routing.module';
+import { TransactionsPageRoutingModule } from './transactions-routing.module';
 
-import { DistributorsPage } from './distributors.page';
+import { TransactionsPage } from './transactions.page';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     CommonModule,
     FormsModule,
     IonicModule,
-    DistributorsPageRoutingModule,
+    TransactionsPageRoutingModule,
     Ng2SearchPipeModule
   ],
-  declarations: [DistributorsPage]
+  declarations: [TransactionsPage]
 })
-export class DistributorsPageModule {}
+export class TransactionsPageModule {}

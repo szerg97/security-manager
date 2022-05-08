@@ -21,7 +21,6 @@
             <h1>{{ distributor.name }}</h1>
           </ion-card-header>
           <ion-card-content>
-            <p *ngIf="isAdmin">Identifier: {{ distributor.id}}</p>
             <p><ion-icon name="location-sharp"></ion-icon> {{ distributor.country }}, {{ distributor.city }}, {{ distributor.address }}</p>
             <p><ion-icon name="mail-sharp"></ion-icon> {{ distributor.email}}</p>
             <p><ion-icon name="call-sharp"></ion-icon> {{ distributor.phone}}</p>

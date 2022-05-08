@@ -12,6 +12,8 @@ import { DistributorService } from '../_services/distributor.service';
 })
 export class DistributorsPage implements OnInit, OnDestroy {
 
+  searchTerm: string;
+
   loadedDistributors: Issuer[];
   isLoading = false;
   private distributorsSub: Subscription;
@@ -30,7 +32,16 @@ export class DistributorsPage implements OnInit, OnDestroy {
     this.distributorsSub = this.distributorService.distributors.subscribe(distributors => {
       this.loadedDistributors = distributors;
       this.menuCtrl.enable(true);
-    })
+    });
+    
+    this.isLoading = true;
+    this.distributorService.fetchDistributors().subscribe(() => {
+      this.isLoading = false;
+      
+      this.loadedDistributors.forEach(i => {
+        i.status = this.getIfOpenOrNot(i);
+      });
+    });
   }
 
   onDeleteDistributor(id: string, slidingEl: IonItemSliding) {
@@ -44,14 +55,7 @@ export class DistributorsPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.isLoading = true;
-    this.distributorService.fetchDistributors().subscribe(() => {
-      this.isLoading = false;
-      
-      this.loadedDistributors.forEach(i => {
-        i.status = this.getIfOpenOrNot(i);
-      });
-    });
+    
   }
 
   private getLocalTimeString(): string{
@@ -68,17 +72,20 @@ export class DistributorsPage implements OnInit, OnDestroy {
     let to = 0;
     let q = 0;
 
-    if(day == "Saturday"){
+    if(day == "Saturday" && distributor.saturday){
       start = distributor.saturday.substring(0, 2) + distributor.saturday.substring(3, 5);
       end = distributor.saturday.substring(6, 8) + distributor.saturday.substring(9, 12);
     }
-    else if(day == "Sunday"){
+    else if(day == "Sunday" && distributor.sunday){
       start = distributor.sunday.substring(0, 2) + distributor.sunday.substring(3, 5);
       end = distributor.sunday.substring(6, 8) + distributor.sunday.substring(9, 12);
     }
-    else{
+    else if (distributor.weekdays){
       start = distributor.weekdays.substring(0, 2) + distributor.weekdays.substring(3, 5);
       end = distributor.weekdays.substring(6, 8) + distributor.weekdays.substring(9, 12);
+    }
+    else{
+      return false;
     }
 
     from = parseInt(start);

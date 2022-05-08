@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-categories',
@@ -7,7 +8,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CategoriesPage implements OnInit {
 
-  constructor() { 
+  isAdmin: boolean;
+
+  constructor(private authService: AuthService) {
+    this.isAdmin = this.authService.getUserRoles.includes('gsec'); 
   }
 
   ngOnInit() {

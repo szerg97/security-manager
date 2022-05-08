@@ -38,4 +38,21 @@ public class TransactionMapper {
                 from.getInserted()
         );
     }
+
+    public TransactionExtendedDto fromEntityExtended(Transaction from){
+        return new TransactionExtendedDto(
+                from.getId(),
+                from.getDenomination(),
+                from.getNetValue(),
+                from.getYield(),
+                from.getReferenceYield(),
+                from.getInserted(),
+                from.getPortfolio().getCustomer().getFirstName() + " " + from.getPortfolio().getCustomer().getFirstName(),
+                from.getPortfolio().getCustomer().getEmail(),
+                from.getPortfolio().getCustomer().getPhone(),
+                from.getPortfolio().getCustomer().getInserted(),
+                from.getSecurity().getName(),
+                from.getIssuer().getName()
+        );
+    }
 }
