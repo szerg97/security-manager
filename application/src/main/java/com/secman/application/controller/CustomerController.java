@@ -1,7 +1,6 @@
 package com.secman.application.controller;
 
-import com.secman.application.dto.DemographyDto;
-import com.secman.application.dto.DemographyMapper;
+import com.secman.application.dto.*;
 import com.secman.model.Customer;
 import com.secman.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,6 +30,8 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final DemographyMapper mapper;
+    private final CustomerMapper customerMapper;
+    private final PortfolioMapper portfolioMapper;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Request successful",
@@ -116,10 +117,13 @@ public class CustomerController {
             }
     )
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getOneCustomer(
+    public ResponseEntity<CustomerDto> getOneCustomer(
             @Parameter(name = "id", required = true)
             @PathVariable(name = "id", required = true) Long id){
-        return ResponseEntity.ok(this.customerService.getOne(id));
+        Customer customer = this.customerService.getOne(id);
+        PortfolioDto portfolioDto = this.portfolioMapper.fromEntity(customer.getPortfolio());
+        CustomerDto customerDto = this.customerMapper.fromEntity(customer, portfolioDto);
+        return ResponseEntity.ok(customerDto);
     }
 
     @ApiResponses(value = {

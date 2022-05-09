@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/customers"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="customer">
+  <ion-segment value="general" (ionChange)="onFilter($event)">
+    <ion-segment-button value="general">
+      General
+    </ion-segment-button>
+    <ion-segment-button value="portfolio">
+      Portfolio
+    </ion-segment-button>
+  </ion-segment>
+  <ion-grid>
+    <ion-row *ngIf="isGeneral">
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-card>
+          <ion-card-header class="ion-text-center">
+            <h1>Identifier: {{ customer.id }}</h1>
+            <h2>Registered: {{ customer.registered[0] }}-{{ customer.registered[1] }}-{{ customer.registered[2] }} {{ customer.registered[3] }}:{{ customer.registered[4] }}</h2>
+            <h2>{{ customer.firstName }} {{ customer.lastName }}</h2>
+          </ion-card-header>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>Email</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>{{ customer.email }}</ion-label>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>Phone</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>{{ customer.phone }}</ion-label>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>ID card</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>{{ customer.idCard }}</ion-label>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>Date of birth</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>{{ customer.dateOfBirth[0] }}-{{ customer.dateOfBirth[1] }}-{{ customer.dateOfBirth[2] }}</ion-label>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>Address</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>{{ customer.address }}</ion-label>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>City</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>{{ customer.city }}</ion-label>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>Country</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>{{ customer.country }}</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!isGeneral">
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-card>
+          <ion-card-header>
+            <ion-label>Balance</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+              <ion-label>{{ customer.portfolio.balance }} </ion-label>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>Total securities</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+              <ion-label>{{ customer.portfolio.securitiesTotal }} </ion-label>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>Total denominations</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+              <ion-label>{{ customer.portfolio.denominationTotal }} </ion-label>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-label>Total</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+              <ion-label>{{ customer.portfolio.total }} </ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

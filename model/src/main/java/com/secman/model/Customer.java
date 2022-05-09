@@ -42,6 +42,9 @@ public class Customer extends GSecEntity {
     @Schema(description = "ID card number of customer")
     @NotBlank(message = "error.customer.id-card.not-blank")
     private String idCard;
+    @Schema(description = "Gender of customer")
+    @NotBlank(message = "error.customer.gender.not-blank")
+    private Boolean gender;
     @Schema(description = "Date of birth of customer")
     @NotBlank(message = "error.customer.date-of-birth.not-blank")
     @Past(message = "error.customer.date-of-birth.past")
@@ -60,15 +63,16 @@ public class Customer extends GSecEntity {
     private List<Feedback> feedbacks;
     @JsonIgnore
     @OneToOne(targetEntity = Portfolio.class, mappedBy = "customer")
-    private Portfolio portfolios;
+    private Portfolio portfolio;
 
-    public Customer(String firstName, String lastName, String email, String phone, String idCard, LocalDate dateOfBirth, Address address) {
+    public Customer(String firstName, String lastName, String email, String phone, String idCard, Boolean gender, LocalDate dateOfBirth, Address address) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.idCard = idCard;
+        this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
     }
@@ -79,6 +83,7 @@ public class Customer extends GSecEntity {
         this.email = customer.getEmail();
         this.phone = customer.getPhone();
         this.idCard = customer.getIdCard();
+        this.gender = customer.getGender();
         this.dateOfBirth = customer.getDateOfBirth();
         this.address = customer.getAddress();
     }

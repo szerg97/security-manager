@@ -96,6 +96,7 @@ public class SeedService {
                 "customer@customer.customer",
                 "06305632323",
                 "123456ED",
+                true,
                 LocalDate.of(1989, 2, 13),
                 addressRepository.findById(1L).get()
         );
@@ -108,6 +109,7 @@ public class SeedService {
                     "customer" + i + "@customer" + i + ".customer" + i,
                     "0630563" + i,
                     "123" + i + "ED",
+                    i % 3 != 0,
                     LocalDate.of((int)Math.floor(Math.random()*(2001-1960+1)+1960), 1, 30),
                     addressRepository.findById(Long.valueOf(i)).get()
             );

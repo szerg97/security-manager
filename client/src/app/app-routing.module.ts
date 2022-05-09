@@ -34,7 +34,12 @@ const routes: Routes = [
   {
     path: 'new-message',
     loadChildren: () => import('./messages/new-message/new-message.module').then( m => m.NewMessagePageModule)
+  },
+  {
+    path: 'customers',
+    loadChildren: () => import('./customers/customers.module').then( m => m.CustomersPageModule)
   }
+
 
 ];
 

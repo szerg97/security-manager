@@ -26,6 +26,12 @@
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle menu="m1">
+          <ion-item *ngIf="isAdmin" lines="none" routerLink="/customers">
+            <ion-icon name="people-sharp" slot="start"></ion-icon>
+            <ion-label>Customers</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle menu="m1">
           <ion-item lines="none" routerLink="/profile">
             <ion-icon name="settings-sharp" slot="start"></ion-icon>
             <ion-label>Profile</ion-label>

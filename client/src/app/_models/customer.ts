@@ -1,4 +1,5 @@
 import { Gsec } from "./gsec";
+import { Portfolio } from "./portfolio";
 
 export interface Customer extends Gsec{
     firstName: string;
@@ -6,7 +7,11 @@ export interface Customer extends Gsec{
     email: string;
     phone: string;
     idCard: string;
-    dateOfBirth: Date;
     gender: boolean;
-    addressId: string;
+    dateOfBirth: Date;
+    registered: Date;
+    address: string;
+    city: string;
+    country: string;
+    portfolio: Portfolio;
 }
