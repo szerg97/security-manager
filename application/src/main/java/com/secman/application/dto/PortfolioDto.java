@@ -1,10 +1,4 @@
 package com.secman.application.dto;
-
-import com.secman.model.Customer;
-import com.secman.model.Transaction;
-
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.util.List;
 
 public class PortfolioDto {
@@ -15,6 +9,7 @@ public class PortfolioDto {
     private Double total;
     private String customerName;
     private String customerEmail;
+    private List<TransactionExtendedDto> transactions;
 
     public PortfolioDto(Double balance, Double securitiesTotal, Double denominationTotal, String customerName, String customerEmail) {
         this.balance = balance;
@@ -23,6 +18,16 @@ public class PortfolioDto {
         this.total = this.balance + this.securitiesTotal;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
+    }
+
+    public PortfolioDto(Double balance, Double securitiesTotal, Double denominationTotal, String customerName, String customerEmail, List<TransactionExtendedDto> transactions) {
+        this.balance = balance;
+        this.securitiesTotal = securitiesTotal;
+        this.denominationTotal = denominationTotal;
+        this.total = this.balance + this.securitiesTotal;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.transactions = transactions;
     }
 
     public Double getBalance() {
@@ -71,5 +76,13 @@ public class PortfolioDto {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
+    }
+
+    public List<TransactionExtendedDto> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<TransactionExtendedDto> transactions) {
+        this.transactions = transactions;
     }
 }

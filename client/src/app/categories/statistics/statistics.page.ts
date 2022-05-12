@@ -65,14 +65,18 @@ Chart.register(
 })
 export class StatisticsPage implements OnInit {
 
-  @ViewChild('barChart') barChart;
+  @ViewChild('lineChart') lineChart;
   @ViewChild('pieChart') pieChart;
+  @ViewChild('barChart') barChart;
 
-  bars: any;
+  lines: any;
   barsColorArray: any;
 
   pie: any;
   pieColorArray: any;
+
+  bar: any;
+  barColorArray: any;
 
   stats1: Stat1[];
   stats2: Stat2;
@@ -89,7 +93,8 @@ export class StatisticsPage implements OnInit {
   loadStats1(){
     this.statService.fetchStats1().subscribe(result => {
       this.stats1 = result;
-      this.createBarChart();
+      this.loadStats3();
+      this.createLineChart();
     });
   }
 
@@ -98,6 +103,10 @@ export class StatisticsPage implements OnInit {
       this.stats2 = result;
       this.createPieChart();
     });
+  }
+
+  loadStats3(){
+      this.createBarChart();
   }
 
   getValues(map:  Map<number, number>){
@@ -109,31 +118,8 @@ export class StatisticsPage implements OnInit {
     return arr;
   }
 
-  createPieChart(){
-    this.pie = new Chart(this.pieChart.nativeElement, {
-      type: 'doughnut',
-      data: {
-          datasets: [{
-            label: 'Age distribution',
-            data: [this.stats2.to25, this.stats2.from25to29, this.stats2.from30to39, this.stats2.from40to59, this.stats2.from60],
-            backgroundColor: [
-              'rgb(255, 99, 132)',
-              'rgb(54, 162, 235)',
-              'rgb(255, 205, 86)',
-              'rgb(0, 255, 86)',
-              'rgb(150, 10, 255)'
-            ],
-            hoverOffset: 4,
-          }],
-          labels: ['Under 25 years', '25 - 30 years', '30 - 40 years', '40 - 60', 'Above 60 years'],
-      },
-      options: {
-      }
-  });
-  }
-
-  createBarChart() {
-    this.bars = new Chart(this.barChart.nativeElement, {
+  createLineChart() {
+    this.lines = new Chart(this.lineChart.nativeElement, {
     type: 'line',
     data: {
         datasets: [{
@@ -160,12 +146,75 @@ export class StatisticsPage implements OnInit {
     options: {
         scales: {
             y: {
+                suggestedMin: 50,
+                suggestedMax: 200
+            }
+        }
+    }
+});
+  }
+
+  buildArray(): number[]{
+    const arr = [];
+    for (let i = 0; i < 12; i++){
+      arr.push(this.stats1[0].numberOfTransactions[i] + this.stats1[1].numberOfTransactions[i] + this.stats1[2].numberOfTransactions[i]);
+    }
+    return arr;
+  }
+
+  createBarChart() {
+    this.bar = new Chart(this.barChart.nativeElement, {
+    type: 'bar',
+    data: {
+      datasets: [{
+        label: 'Number of transactions',
+        barPercentage: 0.5,
+        barThickness: 8,
+        maxBarThickness: 10,
+        minBarLength: 5,
+        backgroundColor: "#3e95cd",
+        data: this.buildArray()
+    }],
+    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    },
+    options: {
+        scales: {
+            y: {
                 suggestedMin: 0,
                 suggestedMax: 300
             }
         }
     }
 });
+  }
+
+  createPieChart(){
+    this.pie = new Chart(this.pieChart.nativeElement, {
+      type: 'doughnut',
+      data: {
+          datasets: [{
+            label: 'Age distribution',
+            data: [this.stats2.to25, this.stats2.from25to29, this.stats2.from30to39, this.stats2.from40to59, this.stats2.from60],
+            backgroundColor: [
+              'rgb(255, 99, 132)',
+              'rgb(54, 162, 235)',
+              'rgb(255, 205, 86)',
+              'rgb(0, 255, 86)',
+              'rgb(150, 10, 255)'
+            ],
+            hoverOffset: 4,
+          }],
+          labels: ['Under 25 years', '25 - 30 years', '30 - 40 years', '40 - 60', 'Above 60 years'],
+      },
+      options: {
+      }
+  });
+  }
+
+  ionViewDidLeave(){
+    this.lines.destroy();
+    this.bar.destroy();
+    this.pie.destroy();
   }
 
   ngOnInit() {

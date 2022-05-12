@@ -26,7 +26,7 @@
               <ion-label class="ion-text-wrap">Yield: {{ transaction.yield }}</ion-label>
             </ion-item>
             <ion-item lines="none">
-              <ion-label class="ion-text-wrap">Date: {{ transaction.inserted }}</ion-label>
+              <ion-label class="ion-text-wrap">Date: {{ transaction.inserted[0] }}-{{ transaction.inserted[1] }}-{{ transaction.inserted[2] }} {{ transaction.inserted[3] }}:{{ transaction.inserted[4] }}</ion-label>
             </ion-item>
           </ion-card-content>
         </ion-card>
@@ -46,7 +46,7 @@
               <ion-label class="ion-text-wrap">Phone: {{ transaction.customerPhone }}</ion-label>
             </ion-item>
             <ion-item lines="none">
-              <ion-label class="ion-text-wrap">Registered: {{ transaction.registered }}</ion-label>
+              <ion-label class="ion-text-wrap">Registered: {{ transaction.registered[0] }}-{{ transaction.registered[1] }}-{{ transaction.registered[2] }} {{ transaction.registered[3] }}:{{ transaction.registered[4] }}</ion-label>
             </ion-item>
           </ion-card-content>
         </ion-card>

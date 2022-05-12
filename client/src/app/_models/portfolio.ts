@@ -1,4 +1,5 @@
 import { Gsec } from "./gsec";
+import { Transaction } from "./transaction";
 
 export interface Portfolio extends Gsec{
     balance: number;
@@ -7,4 +8,5 @@ export interface Portfolio extends Gsec{
     total: number;
     customerName: string;
     customerEmail: string;
+    transactions?: Transaction[];
 }

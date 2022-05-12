@@ -34,8 +34,26 @@
     <ion-row>
       <ion-col sizeSm="6" offsetSm="3">
         <ion-item lines="none">
-              <ion-label slot="start">Face value</ion-label>
+              <ion-label slot="start">Denomination</ion-label>
               <ion-label slot="end">{{ category.faceValue  | number: '1.0-2'}} HUF</ion-label>
+       </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-item lines="none">
+              <ion-label slot="start">Frequency</ion-label>
+              <ion-label *ngIf="category.frequency == 1" slot="end">Annual</ion-label>
+              <ion-label *ngIf="category.frequency == 2" slot="end">Half year</ion-label>
+              <ion-label *ngIf="category.frequency == 12" slot="end">Monthly</ion-label>
+       </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col sizeSm="6" offsetSm="3">
+        <ion-item lines="none">
+              <ion-label slot="start">Expiration</ion-label>
+              <ion-label slot="end">{{ category.expiration[0] }}-{{ category.expiration[1] }}-{{ category.expiration[2] }}</ion-label>
        </ion-item>
       </ion-col>
     </ion-row>
@@ -47,7 +65,7 @@
       <ion-row>
        <ion-col sizeSm="6" offsetSm="3">
          <ion-item lines="none">
-          <ion-label slot="start">Denomination</ion-label>
+          <ion-label slot="start">Face value</ion-label>
           <ion-label slot="end">Total</ion-label>
          </ion-item>
          <ion-item lines="none">

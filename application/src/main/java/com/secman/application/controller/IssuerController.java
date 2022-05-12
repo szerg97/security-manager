@@ -148,10 +148,9 @@ public class IssuerController {
     )
     @PostMapping("")
     public ResponseEntity<Issuer> addOneIssuer(
-            @Valid
             @Parameter (name = "issuer", required = true)
             @RequestBody (required = true) Issuer issuer){
-        return ResponseEntity.created(URI.create("/issuers/{id}")).body(this.issuerService.addOne(issuer));
+        return ResponseEntity.ok(this.issuerService.addOne(issuer));
     }
 
     @ApiResponses(value = {

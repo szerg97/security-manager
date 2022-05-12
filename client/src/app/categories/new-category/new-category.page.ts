@@ -24,22 +24,18 @@ export class NewCategoryPage implements OnInit {
     if (!form.valid){
       return;
     }
-
     this.loadingCtrl.create({
-      message: 'Creating category...'
+      message: 'Creating security...'
     })
     .then(loadingEl => {
       loadingEl.present();
       const name = form.value.name;
       const description = form.value.description;
       const currency = form.value.currency;
-      const exchangeRate = form.value.exchangeRate;
       const faceValue = form.value.faceValue;
-      const interest = form.value.interest;
-      const fixedInterest = form.value.fixedInterest;
+      const fixedInterest = true;
 
-      const model = {name, description, currency, exchangeRate, faceValue,
-      interest, fixedInterest}
+      const model = {name, description, currency, faceValue, fixedInterest}
       console.log(model);
 
       this.categoryService

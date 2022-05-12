@@ -144,10 +144,9 @@ public class SecurityController {
     )
     @PostMapping("")
     public ResponseEntity<Security> addOneCategory(
-            @Valid
             @Parameter (name = "security", required = true)
-            @RequestBody (required = true) Security category){
-        return ResponseEntity.created(URI.create("/security-categories/{id}")).body(this.securityService.addOne(category));
+            @RequestBody (required = true) Security security){
+        return ResponseEntity.ok(this.securityService.addOne(security));
     }
 
     @ApiResponses(value = {
