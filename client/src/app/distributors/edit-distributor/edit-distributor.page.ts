@@ -13,7 +13,7 @@ import { DistributorService } from 'src/app/_services/distributor.service';
 })
 export class EditDistributorPage implements OnInit, OnDestroy {
 
-  distributor: Issuer;
+  issuer: Issuer;
   isLoading = false;
   private distributorSub: Subscription;
 
@@ -36,7 +36,7 @@ export class EditDistributorPage implements OnInit, OnDestroy {
 
   getCategory(id: string){
     this.distributorService.getDistributor(id).subscribe(response => {
-      this.distributor = response;
+      this.issuer = response;
       console.log(response);
     }, error => {
       console.log(error);
@@ -49,13 +49,13 @@ export class EditDistributorPage implements OnInit, OnDestroy {
     }
     this.loadingCtrl
       .create({
-        message: 'Updating distributor...'
+        message: 'Updating issuer...'
       })
       .then(loadingEl => {
         loadingEl.present();
         this.distributorService
           .updateDistributor(
-            this.distributor.id,
+            this.issuer.id,
             form.value.name,
             form.value.email,
             form.value.phone,
@@ -64,7 +64,7 @@ export class EditDistributorPage implements OnInit, OnDestroy {
           .subscribe(() => {
             loadingEl.dismiss();
             form.reset();
-            this.router.navigate([`/distributors/${this.distributor.id}`]);
+            this.router.navigate([`/distributors/${this.issuer.id}`]);
           });
       });
   }
