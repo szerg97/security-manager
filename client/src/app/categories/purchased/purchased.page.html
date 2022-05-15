@@ -23,7 +23,7 @@
           <ion-item *ngFor="let transaction of loadedTransactions" [routerLink]="['/', 'categories', 'purchased', transaction.id]" detail>
             <ion-label>
               <p><b>{{ transaction.securityName }}</b></p>
-              <p>Denomination: {{ transaction.denomination | number: '1.0-2'}}</p>
+              <p>Face value: {{ transaction.denomination | number: '1.0-2'}}</p>
               <p>Yield: {{ transaction.yield | number: '1.0-2'}}</p>
             </ion-label>
           </ion-item>
